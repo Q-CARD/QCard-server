@@ -1,0 +1,5 @@
+rootProject.name = 'qcard-server'
+include 'q-api'
+include 'q-common'
+include 'q-admin'
+include 'q-domain'
