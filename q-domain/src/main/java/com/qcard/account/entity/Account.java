@@ -16,7 +16,7 @@ public class Account {
     private Long id;
 
     @Column
-    private String nickname;
+    private String name;
 
     @Column(length = 200)
     private String email;
@@ -29,8 +29,8 @@ public class Account {
     private Boolean isDeleted;
 
     @Builder
-    public Account(String nickname, String email, String password) {
-        this.nickname = nickname;
+    public Account(String name, String email, String password) {
+        this.name = name;
         this.email = email;
         this.password = password;
     }
