@@ -40,5 +40,5 @@ out/
 .vscode/
 
 ### properties ###
-*.properties
-*.yml!/
+q-domain/src/main/resources/application-dev.yml
+q-domain/src/main/resources/application-prod.yml
