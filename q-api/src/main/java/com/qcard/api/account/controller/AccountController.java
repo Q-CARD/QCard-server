@@ -32,4 +32,9 @@ public class AccountController {
         TokenRes response = accountService.signIn(accountReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<String> myAccountInfo(@AuthAccount Account account) {
+        return new ResponseEntity<>(account.getEmail(), HttpStatus.OK);
+    }
 }
