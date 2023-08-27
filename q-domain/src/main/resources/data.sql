@@ -5,4 +5,4 @@ values
 
 insert into question(title, category)
 values
-    ('네트워크 7계층이란?', 'CAT_NW');
+    ('네트워크 7계층이란?', 'CATEGORY_NW');
