@@ -5,7 +5,7 @@ spring:
     group:
       devs:
         - dev
-        - domain
+        - common
       prods:
         - prod
-        - domain
+        - common
