@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers((headers) ->
-                        headers.frameOptions().sameOrigin() //iframe으로 화면을 구성한 페이지의 접근요청을 origin이 같을때만 허용
+                        headers.frameOptions().sameOrigin()
                 )
                 .authorizeHttpRequests((auth) ->
                         auth.requestMatchers(antMatcher("/h2-dev/**")).permitAll()
