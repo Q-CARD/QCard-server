@@ -1,4 +1,4 @@
-package com.qcard.question.entity;
+package com.qcard.common.enums;
 
 import lombok.RequiredArgsConstructor;
 

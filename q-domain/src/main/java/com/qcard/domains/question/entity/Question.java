@@ -1,5 +1,6 @@
-package com.qcard.question.entity;
+package com.qcard.domains.question.entity;
 
+import com.qcard.common.enums.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

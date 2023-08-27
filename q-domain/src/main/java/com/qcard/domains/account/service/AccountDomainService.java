@@ -1,4 +1,4 @@
-package com.qcard.account.service;
+package com.qcard.domains.account.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
