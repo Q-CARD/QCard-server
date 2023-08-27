@@ -37,4 +37,10 @@ public class AccountController {
     public ResponseEntity<String> myAccountInfo(@AuthAccount Account account) {
         return new ResponseEntity<>(account.getEmail(), HttpStatus.OK);
     }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<String> accountInfo(@PathVariable Long accountId) {
+        String name = accountDomainService.findAccountById(accountId);
+        return new ResponseEntity<>(name, HttpStatus.OK);
+    }
 }
