@@ -1,4 +1,4 @@
-package com.qcard.question.entity;
+package com.qcard.domains.question.entity;
 
 import lombok.RequiredArgsConstructor;
 
