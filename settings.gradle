@@ -1,4 +1,4 @@
-rootProject.name = 'qcard-server'
+rootProject.name = 'QCard-server'
 include 'q-api'
 include 'q-common'
 include 'q-admin'
