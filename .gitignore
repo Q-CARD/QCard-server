@@ -40,10 +40,6 @@ out/
 .vscode/
 
 ### properties ###
-q-domain/src/main/resources/application-dev.yml
-q-domain/src/main/resources/application-prod.yml
-
 q-domain/src/main/resources/*.yml
 q-domain/src/main/resources/*.yaml
-
-q-admin/src/main/resources/
+q-admin/src/main/resources/*.yml
