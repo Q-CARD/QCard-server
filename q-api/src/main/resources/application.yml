@@ -1,3 +1,11 @@
 spring:
   profiles:
-    active: dev
+    active:
+      - devs
+    group:
+      devs:
+        - dev
+        - common
+      prods:
+        - prod
+        - common
