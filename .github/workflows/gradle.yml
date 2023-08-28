@@ -41,10 +41,6 @@ jobs:
       - name: create application.yml in domain
         run: touch ./q-domain/src/main/resources/application-prod.yml 
           && echo "${{secrets.APPLICATION_DOMAIN}}" > ./q-domain/src/main/resources/application-prod.yml
-
-      - name: create application.yml in api
-        run: touch ./q-api/src/main/resources/application.yml 
-          && echo "${{secrets.APPLICATION_API}}" > ./q-api/src/main/resources/application.yml 
       
       - name: create application.yml in common
         run: touch ./q-common/src/main/resources/application-common.yml 
@@ -58,11 +54,6 @@ jobs:
         with:
           name: application-domain.yml
           path: ./q-domain/src/main/resources/application-prod.yml
-          
-      - uses: actions/upload-artifact@v2
-        with:
-          name: application.yml
-          path: ./q-api/src/main/resources/application.yml
 
       - uses: actions/upload-artifact@v2
         with:
