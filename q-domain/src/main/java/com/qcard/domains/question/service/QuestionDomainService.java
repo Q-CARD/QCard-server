@@ -19,4 +19,10 @@ public class QuestionDomainService {
     public List<Question> findQuestionByCategory(Category category) {
         return questionRepository.findAllByCategory(category);
     }
+
+    @Transactional(readOnly = true)
+    public Question findQuestionByPk(Long id) {
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 id입니다."));
+    }
 }

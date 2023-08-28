@@ -19,4 +19,8 @@ public class QuestionService {
         List<Question> entities = questionDomainService.findQuestionByCategory(category);
         return entities.stream().map(QuestionRes::new).collect(Collectors.toList());
     }
+
+    public QuestionRes findQuestion(Long id) {
+        return new QuestionRes(questionDomainService.findQuestionByPk(id));
+    }
 }
