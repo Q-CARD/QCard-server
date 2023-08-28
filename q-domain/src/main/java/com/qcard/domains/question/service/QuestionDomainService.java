@@ -19,4 +19,9 @@ public class QuestionDomainService {
     public List<Question> findQuestionByCategory(Category category) {
         return questionRepository.findAllByCategory(category);
     }
+
+    public Question findQuestionById(Long questionId) {
+        return questionRepository.findById(questionId)
+                .orElseThrow(() -> new IllegalArgumentException(questionId + ": 존재하지 않는 질문입니다."));
+    }
 }
