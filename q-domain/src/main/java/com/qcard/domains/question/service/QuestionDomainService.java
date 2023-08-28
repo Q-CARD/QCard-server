@@ -4,11 +4,13 @@ import com.qcard.common.enums.Category;
 import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
