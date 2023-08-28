@@ -2,6 +2,7 @@ package com.qcard.api.question.dto;
 
 import com.qcard.api.answer.dto.AnswerRes;
 import com.qcard.domains.account.entity.Account;
+import com.qcard.domains.heart.entity.Heart;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
 import lombok.AccessLevel;
@@ -19,11 +20,11 @@ public class QuestionDetailRes {
     private List<AnswerRes> answers;
 
 
-    public QuestionDetailRes(List<Answer> answers, Account account) {
+    public QuestionDetailRes(List<Answer> answers, Account account, List<Long> hearts) {
         this.questionId = answers.get(0).getQuestion().getId();
         this.title = answers.get(0).getQuestion().getTitle();
         this.answers = answers.stream()
-                .map(answer -> new AnswerRes(answer, account))
+                .map(answer -> new AnswerRes(answer, account, hearts))
                 .collect(Collectors.toList());
     }
 }

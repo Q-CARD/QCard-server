@@ -8,6 +8,8 @@ import com.qcard.domains.question.entity.Answer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class HeartDomainService {
@@ -40,4 +42,7 @@ public class HeartDomainService {
                 .orElseThrow(() -> new IllegalArgumentException(answerId + ": 하트를 누른 기록이 없기에 삭제할 수 없습니다."));
     }
 
+    public List<Heart> findHeartByAccount(Account account) {
+        return heartRepository.findByAccount(account);
+    }
 }

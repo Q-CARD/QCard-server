@@ -36,6 +36,8 @@ public class AnswerService {
     // TODO: account == answer.getAccount()로 type 변경
     public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
-        return new QuestionDetailRes(entities, account);
+        List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)
+                .stream().map(heart -> heart.getAnswer().getId()).toList();
+        return new QuestionDetailRes(entities, account, heartedAnswerList);
     }
 }
