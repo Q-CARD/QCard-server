@@ -33,6 +33,7 @@ public class Account {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.isDeleted = Boolean.FALSE;
     }
 
 }
