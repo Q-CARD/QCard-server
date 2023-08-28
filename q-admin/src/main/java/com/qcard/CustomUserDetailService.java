@@ -21,7 +21,7 @@ public class CustomUserDetailService implements UserDetailsService {
     private final JwtService jwtService;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return accountDomainService.findAccountByEmail(email)
+        return accountDomainService.findOpAccountByEmail(email)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException(email + ": 존재하지 않는 계정입니다."));
     }

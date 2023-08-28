@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) ->
                         auth.requestMatchers(antMatcher("/h2-dev/**")).permitAll()
                                 .requestMatchers(antMatcher("/questions/**")).permitAll()
-                                .requestMatchers(antMatcher("/accounts/signUp"), antMatcher("/accounts/signIn")).permitAll()
+                                .requestMatchers(antMatcher("/accounts/signup"), antMatcher("/accounts/signin")).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .apply(new JwtSecurityConfig(jwtUtil));

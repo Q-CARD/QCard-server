@@ -5,12 +5,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class AccountRes {
+public class SignUpRes {
     private String name;
-    private String email;
+    private String message;
 
-    public AccountRes(String name, String email) {
+    public SignUpRes(String name) {
         this.name = name;
-        this.email = email;
+        this.message = "성공적으로 회원가입 되셨습니다.";
     }
 }

@@ -1,5 +1,7 @@
 package com.qcard.api.account.controller;
 
+import com.qcard.api.account.dto.SignInReq;
+import com.qcard.api.account.dto.SignUpRes;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.service.AccountDomainService;
 import com.qcard.api.account.dto.AccountReq;
@@ -21,26 +23,21 @@ public class AccountController {
     private final AccountService accountService;
     private final AccountDomainService accountDomainService;
 
-    @PostMapping("/signUp")
-    public ResponseEntity<AccountRes> signUp(@RequestBody AccountReq accountReq) {
-        AccountRes response = accountService.signUp(accountReq);
+    @PostMapping("/signup")
+    public ResponseEntity<SignUpRes> signUp(@RequestBody AccountReq accountReq) {
+        SignUpRes response = accountService.signUp(accountReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/signIn")
-    public ResponseEntity<TokenRes> signIn(@RequestBody AccountReq accountReq) {
-        TokenRes response = accountService.signIn(accountReq);
+    @PostMapping("/signin")
+    public ResponseEntity<TokenRes> signIn(@RequestBody SignInReq signInReq) {
+        TokenRes response = accountService.signIn(signInReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<String> myAccountInfo(@AuthAccount Account account) {
-        return new ResponseEntity<>(account.getEmail(), HttpStatus.OK);
-    }
-
-    @GetMapping("/{accountId}")
-    public ResponseEntity<String> accountInfo(@PathVariable Long accountId) {
-        String name = accountDomainService.findAccountById(accountId);
-        return new ResponseEntity<>(name, HttpStatus.OK);
+    public ResponseEntity<AccountRes> myAccountInfo(@AuthAccount Account account) {
+        AccountRes response = new AccountRes(account.getName(), account.getEmail());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

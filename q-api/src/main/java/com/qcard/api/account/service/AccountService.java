@@ -1,5 +1,7 @@
 package com.qcard.api.account.service;
 
+import com.qcard.api.account.dto.SignInReq;
+import com.qcard.api.account.dto.SignUpRes;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.service.AccountDomainService;
 import com.qcard.api.account.dto.AccountReq;
@@ -15,24 +17,23 @@ public class AccountService {
     private final AccountDomainService accountDomainService;
     private final JwtService jwtService;
 
-    public AccountRes signUp(AccountReq accountReq) {
+    public SignUpRes signUp(AccountReq accountReq) {
 
         if (!accountReq.isValid()) {
             throw new IllegalArgumentException("사용자에 대한 올바른 정보를 입력해주세요.");
         }
 
-        String name = accountReq.getEmail().split("@")[0];
         Account account = accountDomainService.createAccount(
                 accountReq.getEmail(),
-                name,
+                accountReq.getName(),
                 jwtService.encryptPassword(accountReq.getPassword())
         );
-        return new AccountRes(name);
+        return new SignUpRes(account.getName());
     }
 
-    public TokenRes signIn(AccountReq accountReq) {
+    public TokenRes signIn(SignInReq signInReq) {
         Account account = accountDomainService.findAccountByEmail(
-                accountReq.getEmail()).orElseThrow(() -> new IllegalArgumentException("가입하지 않는 이메일입니다."));
+                signInReq.getEmail());
         return jwtService.createJwt(
                 account.getEmail(),
                 account.getPassword()
