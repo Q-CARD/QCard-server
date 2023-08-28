@@ -4,6 +4,7 @@ import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.entity.Answer;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,10 @@ public class Heart {
     @ManyToOne
     @JoinColumn(name = "answer")
     private Answer answer;
+
+    @Builder
+    public Heart(Account account, Answer answer) {
+        this.account = account;
+        this.answer = answer;
+    }
 }
