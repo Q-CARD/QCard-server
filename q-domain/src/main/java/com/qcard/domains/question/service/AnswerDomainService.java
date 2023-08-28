@@ -1,11 +1,10 @@
-package com.qcard.domains.answer.service;
+package com.qcard.domains.question.service;
 
 import com.qcard.common.enums.Type;
 import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.answer.repository.AnswerRepository;
+import com.qcard.domains.question.repository.AnswerRepository;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
-import com.qcard.domains.question.repository.QuestionRepository;
 import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

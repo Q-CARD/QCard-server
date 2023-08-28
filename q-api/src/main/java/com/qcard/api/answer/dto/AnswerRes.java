@@ -7,6 +7,7 @@ import com.qcard.domains.question.entity.Answer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.StreamingHttpOutputMessage;
 
 import java.time.LocalDateTime;
 
@@ -17,20 +18,29 @@ public class AnswerRes {
     private Type type;
     private AccountRes account;
     private String content;
-    private Integer heart_cnt;
+
+    private Integer heartCount;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    @Builder
-    public AnswerRes(Answer entity) {
-        this.answerId = entity.getId();
-        this.type = entity.getType();
-        this.account = createdAccountRes(entity.getAccount());
-        this.content = entity.getContent();
+    private Boolean isHearted;
+
+    private Boolean isMine;
+
+    public AnswerRes(Answer answer, Account myAccount) {
+        this.answerId = answer.getId();
+        this.type = answer.getType();
+        this.account = createdAccountRes(answer.getAccount());
+        this.content = answer.getContent();
         // TODO: heart get api 만들고 연결하기
-        this.heart_cnt = 1;
-        this.createdAt = entity.getCreatedAt();
-        this.modifiedAt = entity.getModifiedAt();
+        this.heartCount = 1;
+        this.createdAt = answer.getCreatedAt();
+        this.modifiedAt = answer.getModifiedAt();
+        this.isMine = Boolean.FALSE;
+
+        if (myAccount.getId().equals(answer.getAccount().getId())) {
+            this.isMine = Boolean.TRUE;
+        }
     }
 
     private AccountRes createdAccountRes(Account account) {

@@ -1,7 +1,7 @@
 package com.qcard.domains.heart.service;
 
 import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.answer.service.AnswerDomainService;
+import com.qcard.domains.question.service.AnswerDomainService;
 import com.qcard.domains.heart.entity.Heart;
 import com.qcard.domains.heart.repository.HeartRepository;
 import com.qcard.domains.question.entity.Answer;
