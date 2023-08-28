@@ -42,23 +42,15 @@ jobs:
         run: touch ./q-domain/src/main/resources/application-prod.yml 
           && echo "${{secrets.APPLICATION_DOMAIN}}" > ./q-domain/src/main/resources/application-prod.yml
       
-      - name: create application.yml in common
-        run: touch ./q-common/src/main/resources/application-common.yml 
-          && echo "${{secrets.APPLICATION_COMMON}}" > ./q-common/src/main/resources/application-common.yml 
-      
       - name: create application.yml in admin
         run: touch ./q-admin/src/main/resources/application-admin.yml 
-          && echo "${{secrets.APPLICATION_ADMIN}}" > ./q-admin/src/main/resources/application-admin.yml 
-        
+          && echo "${{secrets.APPLICATION_ADMIN}}" > ./q-admin/src/main/resources/application-admin.yml
+
       - uses: actions/upload-artifact@v2
         with:
           name: application-domain.yml
           path: ./q-domain/src/main/resources/application-prod.yml
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: application.yml
-          path: ./q-common/src/main/resources/application-common.yml
 
       - uses: actions/upload-artifact@v2
         with:
