@@ -1,4 +1,4 @@
-package com.qcard.domains.answer.repository;
+package com.qcard.domains.question.repository;
 
 import com.qcard.domains.question.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
