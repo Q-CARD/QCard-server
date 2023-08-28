@@ -1,4 +1,4 @@
-package com.qcard.account.entity;
+package com.qcard.domains.account.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -16,7 +16,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 @RequiredArgsConstructor
 public class AuthAccountArgumentResolver implements HandlerMethodArgumentResolver {
+
     private final AccountDomainService accountDomainService;
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(AuthAccount.class);
@@ -33,9 +35,6 @@ public class AuthAccountArgumentResolver implements HandlerMethodArgumentResolve
             throw  new RuntimeException("Security Context 에 인증 정보가 없습니다.");
         }
 
-        return accountDomainService.findAccountByEmail(authentication.getName())
-                .orElseThrow(() -> new IllegalArgumentException("이메일이 올바르지 않습니다."));
+        return accountDomainService.findAccountByEmail(authentication.getName());
     }
-
-
 }

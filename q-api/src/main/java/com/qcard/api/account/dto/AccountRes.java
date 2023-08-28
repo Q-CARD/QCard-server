@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountRes {
     private String name;
-    private String message;
+    private String email;
 
-    public AccountRes(String name) {
+    public AccountRes(String name, String email) {
         this.name = name;
-        this.message = "성공적으로 회원가입 되셨습니다.";
+        this.email = email;
     }
 }
