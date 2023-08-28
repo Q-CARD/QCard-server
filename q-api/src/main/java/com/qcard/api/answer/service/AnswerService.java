@@ -35,6 +35,7 @@ public class AnswerService {
     // TODO: account == answer.getAccount()로 type 변경
     public List<AnswerRes> findAnswerByQuestionId(Account account, Long questionId) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
-        return entities.stream().map(AnswerRes::new).collect(Collectors.toList());
+        return entities.stream().map(AnswerRes -> AnswerRes()).collect(Collectors.toList());
     }
+
 }

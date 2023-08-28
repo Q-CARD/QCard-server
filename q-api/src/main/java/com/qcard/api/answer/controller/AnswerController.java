@@ -25,4 +25,10 @@ public class AnswerController {
         AnswerCreateRes response = answerService.createAnswer(account, answerReq);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{answerId}")
+    public RequestEntity<HeartRes> heartUpdate(@AuthAccount Account account, @PathVariable Long answerId) {
+        HeartRes response = answerService.updateHeart(account, answerId);
+    }
+
 }
