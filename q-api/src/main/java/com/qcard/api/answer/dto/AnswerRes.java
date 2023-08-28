@@ -34,7 +34,6 @@ public class AnswerRes {
         this.type = answer.getType();
         this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
-        // TODO: heart get api 만들고 연결하기
         this.heartCount = 1;
         this.createdAt = answer.getCreatedAt();
         this.modifiedAt = answer.getModifiedAt();

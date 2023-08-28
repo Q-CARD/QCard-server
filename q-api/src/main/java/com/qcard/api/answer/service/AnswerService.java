@@ -32,8 +32,6 @@ public class AnswerService {
         return new AnswerCreateRes(answer.getContent());
     }
 
-    // TODO: heartDomainService.countHeartByAnswerId()로 하트수 기입
-    // TODO: account == answer.getAccount()로 type 변경
     public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
         List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)

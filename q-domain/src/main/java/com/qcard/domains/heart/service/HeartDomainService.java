@@ -7,10 +7,12 @@ import com.qcard.domains.heart.repository.HeartRepository;
 import com.qcard.domains.question.entity.Answer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class HeartDomainService {
     private final HeartRepository heartRepository;
@@ -26,6 +28,7 @@ public class HeartDomainService {
         );
     }
 
+    @Transactional(readOnly = true)
     public Heart findHeart(Account account, Long answerId) {
         Answer answer = answerDomainService.findAnswerById(answerId);
         return heartRepository.findHeartByAccountAndAnswer(account, answer);
@@ -42,6 +45,7 @@ public class HeartDomainService {
                 .orElseThrow(() -> new IllegalArgumentException(answerId + ": 하트를 누른 기록이 없기에 삭제할 수 없습니다."));
     }
 
+    @Transactional(readOnly = true)
     public List<Heart> findHeartByAccount(Account account) {
         return heartRepository.findByAccount(account);
     }
