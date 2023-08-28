@@ -1,5 +1,6 @@
 package com.qcard.api.question.service;
 
+import com.qcard.api.question.dto.QuestionMainRes;
 import com.qcard.api.question.dto.QuestionRes;
 import com.qcard.common.enums.Category;
 import com.qcard.domains.question.entity.Question;
@@ -18,5 +19,13 @@ public class QuestionService {
     public List<QuestionRes> findQuestionByCategory(Category category) {
         List<Question> entities = questionDomainService.findQuestionByCategory(category);
         return entities.stream().map(QuestionRes::new).collect(Collectors.toList());
+    }
+
+    public QuestionRes findQuestion(Long id) {
+        return new QuestionRes(questionDomainService.findQuestionByPk(id));
+    }
+
+    public QuestionMainRes findQuestionOnMain() {
+        return new QuestionMainRes(questionDomainService.findQuestionByCategory(Category.CATEGORY_NW));
     }
 }

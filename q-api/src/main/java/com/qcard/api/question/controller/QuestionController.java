@@ -3,6 +3,7 @@ package com.qcard.api.question.controller;
 import com.qcard.api.answer.dto.AnswerRes;
 import com.qcard.api.answer.service.AnswerService;
 import com.qcard.api.question.dto.QuestionDetailRes;
+import com.qcard.api.question.dto.QuestionMainRes;
 import com.qcard.api.question.dto.QuestionRes;
 import com.qcard.api.question.service.QuestionService;
 import com.qcard.auth.AuthAccount;
@@ -25,8 +26,8 @@ public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
 
-    @GetMapping("/{category}")
-    private ResponseEntity<List<QuestionRes>> QuestionByCategoryFind(@PathVariable Category category) {
+    @GetMapping("/categories/{category}")
+    private ResponseEntity<List<QuestionRes>> questionsByCategoryFind(@PathVariable Category category) {
         List<QuestionRes> res = questionService.findQuestionByCategory(category);
         return ResponseEntity.ok(res);
     }
@@ -35,5 +36,17 @@ public class QuestionController {
     private ResponseEntity<QuestionDetailRes> questionDetail(@AuthAccount Account account, @PathVariable Long questionId) {
         QuestionDetailRes response = answerService.findAnswerByQuestionId(account, questionId);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    private ResponseEntity<QuestionRes> questionByIdFind(@PathVariable Long id) {
+        QuestionRes res = questionService.findQuestion(id);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/main")
+    private ResponseEntity<QuestionMainRes> questionsOnMain() {
+        QuestionMainRes res = questionService.findQuestionOnMain();
+        return ResponseEntity.ok(res);
     }
 }
