@@ -36,6 +36,8 @@ public class HeartDomainService {
     public Heart deleteHeart(Account account, Long answerId) {
         Answer answer = answerDomainService.findAnswerById(answerId);
 
-        return heartRepository.deleteHeartByAccountAndAnswer(account, answer);
+        return heartRepository.deleteHeartByAccountAndAnswer(account, answer)
+                .orElseThrow(() -> new IllegalArgumentException(answerId + ": 하트를 누른 기록이 없기에 삭제할 수 없습니다."));
     }
+
 }
