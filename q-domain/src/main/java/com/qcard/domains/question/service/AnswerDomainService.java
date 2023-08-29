@@ -38,6 +38,11 @@ public class AnswerDomainService {
     }
 
     @Transactional(readOnly = true)
+    public List<Answer> findAnswerByAccount(Account account) {
+        return answerRepository.findAllByAccount(account);
+    }
+
+    @Transactional(readOnly = true)
     public Answer findAnswerById(Long answerId) {
         return answerRepository.findAnswerById(answerId).orElseThrow(
                 () -> new IllegalArgumentException(answerId + ": 존재하지 않는 답변입니다.")
