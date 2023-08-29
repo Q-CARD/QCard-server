@@ -38,12 +38,6 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    private ResponseEntity<QuestionRes> questionByIdFind(@PathVariable Long id) {
-        QuestionRes res = questionService.findQuestion(id);
-        return ResponseEntity.ok(res);
-    }
-
     @GetMapping("/main")
     private ResponseEntity<QuestionMainRes> questionsOnMain() {
         QuestionMainRes res = questionService.findQuestionOnMain();
