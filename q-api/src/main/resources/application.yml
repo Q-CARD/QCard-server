@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active:
+      - prods
+      - admin
+    group:
+      devs:
+        - dev
+        - common
+      prods:
+        - prod
+        - common
