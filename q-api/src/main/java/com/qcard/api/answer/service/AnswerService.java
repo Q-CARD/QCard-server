@@ -1,6 +1,7 @@
 package com.qcard.api.answer.service;
 
 import com.qcard.api.answer.dto.AnswerCreateRes;
+import com.qcard.api.answer.dto.AnswerMeRes;
 import com.qcard.api.answer.dto.AnswerReq;
 import com.qcard.api.answer.dto.AnswerRes;
 import com.qcard.api.heart.dto.HeartRes;
@@ -37,5 +38,10 @@ public class AnswerService {
         List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)
                 .stream().map(heart -> heart.getAnswer().getId()).toList();
         return new QuestionDetailRes(entities, account, heartedAnswerList);
+    }
+
+    public List<AnswerMeRes> getAnswersByAuth(Account account) {
+        List<Answer> entities = answerDomainService.findAnswerByAccount(account);
+        return entities.stream().map(AnswerMeRes::new).collect(Collectors.toList());
     }
 }
