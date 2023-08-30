@@ -48,4 +48,9 @@ public class AnswerDomainService {
                 () -> new IllegalArgumentException(answerId + ": 존재하지 않는 답변입니다.")
         );
     }
+
+    public Answer updateAnswer(Answer answer, String content) {
+        answer.updateContent(content);
+        return answerRepository.save(answer);
+    }
 }

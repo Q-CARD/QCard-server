@@ -29,12 +29,12 @@ public class AnswerRes {
 
     private Boolean isMine;
 
-    public AnswerRes(Answer answer, Account myAccount, List<Long> heartList) {
+    public AnswerRes(Answer answer, Account myAccount, List<Long> heartList, Integer heartCount) {
         this.answerId = answer.getId();
         this.type = answer.getType();
         this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
-        this.heartCount = 1;
+        this.heartCount = heartCount;
         this.createdAt = answer.getCreatedAt();
         this.modifiedAt = answer.getModifiedAt();
         this.isMine = Boolean.FALSE;

@@ -11,7 +11,10 @@ import java.util.Optional;
 public interface HeartRepository extends JpaRepository<Heart, Long> {
     Integer countHeartsByAnswerId(Long AnswerId);
     Heart findHeartByAccountAndAnswer(Account account, Answer answer);
-    Optional<Heart> deleteHeartByAccountAndAnswer(Account account, Answer answer);
+    Integer deleteHeartByAccountAndAnswer(Account account, Answer answer);
 
     List<Heart> findByAccount(Account account);
+
+    Boolean existsHeartByAccountAndAnswer(Account account, Answer answer);
+
 }

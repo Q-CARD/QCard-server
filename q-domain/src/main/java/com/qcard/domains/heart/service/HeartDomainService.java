@@ -20,12 +20,18 @@ public class HeartDomainService {
 
     public Heart createHeart(Account account, Long answerId) {
         Answer answer = answerDomainService.findAnswerById(answerId);
+        Boolean isHearted = existHeartByAccountAndAnswer(account, answer);
 
-        return heartRepository.save(Heart.builder()
-                .account(account)
-                .answer(answer)
-                .build()
-        );
+        if(isHearted) {
+            throw new IllegalArgumentException(answerId + ": 이미 좋아요를 누른 답변입니다.");
+        }
+        else{
+            return heartRepository.save(Heart.builder()
+                    .account(account)
+                    .answer(answer)
+                    .build()
+            );
+        }
     }
 
     @Transactional(readOnly = true)
@@ -38,11 +44,14 @@ public class HeartDomainService {
         return heartRepository.countHeartsByAnswerId(answerId);
     }
 
-    public Heart deleteHeart(Account account, Long answerId) {
+    public Boolean existHeartByAccountAndAnswer(Account account, Answer answer) {
+        return heartRepository.existsHeartByAccountAndAnswer(account, answer);
+    }
+
+    public Integer deleteHeart(Account account, Long answerId) {
         Answer answer = answerDomainService.findAnswerById(answerId);
 
-        return heartRepository.deleteHeartByAccountAndAnswer(account, answer)
-                .orElseThrow(() -> new IllegalArgumentException(answerId + ": 하트를 누른 기록이 없기에 삭제할 수 없습니다."));
+        return heartRepository.deleteHeartByAccountAndAnswer(account, answer);
     }
 
     @Transactional(readOnly = true)
