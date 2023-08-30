@@ -1,5 +1,6 @@
 package com.qcard.api.answer.controller;
 
+import com.qcard.api.account.service.AccountService;
 import com.qcard.api.answer.dto.AnswerCreateRes;
 import com.qcard.api.answer.dto.AnswerMeRes;
 import com.qcard.api.answer.dto.AnswerReq;
@@ -16,6 +17,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -24,6 +26,7 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerService answerService;
+    private final AccountService accountService;
 
     @PostMapping("")
     public ResponseEntity<AnswerCreateRes> answerCreate(@AuthAccount Account account, @RequestBody AnswerReq answerReq) {
@@ -34,6 +37,13 @@ public class AnswerController {
     @GetMapping("/me")
     public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account) {
         List<AnswerMeRes> response = answerService.getAnswersByAuth(account);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{answerId}")
+    public ResponseEntity<AnswerMeRes> answerUpdate(@AuthAccount Account account, @PathVariable Long answerId,
+                                                    @RequestBody AnswerReq answerReq) throws AccessDeniedException {
+        AnswerMeRes response = answerService.updateAnswer(account, answerId, answerReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
