@@ -18,7 +18,7 @@ public class HeartService {
     }
 
     public HeartRes deleteHeart(Account account, Long answerId) {
-        Heart heart = heartDomainService.deleteHeart(account, answerId);
+        Integer rows = heartDomainService.deleteHeart(account, answerId);
         return new HeartRes(answerId);
     }
 }
