@@ -41,33 +41,16 @@ jobs:
       - name: create application.yml in domain
         run: touch ./q-domain/src/main/resources/application-prod.yml 
           && echo "${{secrets.APPLICATION_DOMAIN}}" > ./q-domain/src/main/resources/application-prod.yml
-
-      - name: create application.yml in api
-        run: touch ./q-api/src/main/resources/application.yml 
-          && echo "${{secrets.APPLICATION_API}}" > ./q-api/src/main/resources/application.yml 
-      
-      - name: create application.yml in common
-        run: touch ./q-common/src/main/resources/application-common.yml 
-          && echo "${{secrets.APPLICATION_COMMON}}" > ./q-common/src/main/resources/application-common.yml 
       
       - name: create application.yml in admin
         run: touch ./q-admin/src/main/resources/application-admin.yml 
-          && echo "${{secrets.APPLICATION_ADMIN}}" > ./q-admin/src/main/resources/application-admin.yml 
-        
+          && echo "${{secrets.APPLICATION_ADMIN}}" > ./q-admin/src/main/resources/application-admin.yml
+
       - uses: actions/upload-artifact@v2
         with:
           name: application-domain.yml
           path: ./q-domain/src/main/resources/application-prod.yml
-          
-      - uses: actions/upload-artifact@v2
-        with:
-          name: application.yml
-          path: ./q-api/src/main/resources/application.yml
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: application.yml
-          path: ./q-common/src/main/resources/application-common.yml
 
       - uses: actions/upload-artifact@v2
         with:
@@ -96,9 +79,9 @@ jobs:
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ secrets.S3_BUCKET_NAME }}/deploy-spring/$GITHUB_SHA.zip --source .
         
-      #- name: Code Deploy
-      #  run: aws deploy create-deployment --application-name ${{ secrets.CODE_DEPLOY_APP_NAME }}
-      #      --deployment-config-name CodeDeployDefault.OneAtATime
-      #      --deployment-group-name ${{ secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }}
-      #      --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=deploy/$GITHUB_SHA.zip
+      - name: Code Deploy
+        run: aws deploy create-deployment --application-name ${{ secrets.CODE_DEPLOY_APP_NAME }}
+            --deployment-config-name CodeDeployDefault.OneAtATime
+            --deployment-group-name ${{ secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }}
+            --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=deploy-spring/$GITHUB_SHA.zip
             
