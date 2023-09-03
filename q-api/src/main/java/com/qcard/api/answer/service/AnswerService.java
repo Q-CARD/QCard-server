@@ -7,8 +7,10 @@ import com.qcard.api.answer.dto.AnswerUpdateReq;
 import com.qcard.api.question.dto.QuestionDetailRes;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.heart.service.HeartDomainService;
+import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.service.AnswerDomainService;
 import com.qcard.domains.question.entity.Answer;
+import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class AnswerService {
     private final AnswerDomainService answerDomainService;
     private final HeartDomainService heartDomainService;
+    private final QuestionDomainService questionDomainService;
 
     public AnswerCreateRes createAnswer(Account account, AnswerReq answerReq) {
         Answer answer = answerDomainService.createAnswer(
@@ -35,10 +38,13 @@ public class AnswerService {
 
     public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
+        if(entities.isEmpty()) {
+            Question question = questionDomainService.findQuestionById(questionId);
+            return new QuestionDetailRes(question, account);
+        }
 
         List<Long> answerIds = entities.stream().map(Answer::getId).toList();
         Map<Long, Integer> heartCounts = answerIds.stream().collect(Collectors.toMap(id -> id, heartDomainService::countHeartByAnswerId));
-
         List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)
                 .stream().map(heart -> heart.getAnswer().getId()).toList();
 

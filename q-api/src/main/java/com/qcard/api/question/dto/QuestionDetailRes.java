@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,5 +29,11 @@ public class QuestionDetailRes {
         this.answers = answers.stream()
                 .map(answer -> new AnswerRes(answer, account, hearts, heartCnts.get(answer.getId())))
                 .collect(Collectors.toList());
+    }
+
+    public QuestionDetailRes(Question question, Account account) {
+        this.questionId = question.getId();
+        this.title = question.getTitle();
+        this.answers = new ArrayList<>();
     }
 }
