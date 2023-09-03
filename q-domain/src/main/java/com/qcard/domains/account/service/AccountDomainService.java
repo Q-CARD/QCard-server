@@ -3,6 +3,7 @@ package com.qcard.domains.account.service;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +24,6 @@ public class AccountDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Account findAccount(String email, String password) {
-        return accountRepository.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 존재하지 않습니다."));
-    }
-
-    @Transactional(readOnly = true)
     public Optional<Account> findOpAccountByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
@@ -40,9 +35,7 @@ public class AccountDomainService {
     }
 
     @Transactional(readOnly = true)
-    public String findAccountById(Long accountId) {
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new IllegalArgumentException(accountId + ": 존재하지 않는 계정입니다"));
-        return account.getName();
+    public Boolean existsAccountByEmail(String email) {
+        return accountRepository.existsAccountByEmail(email);
     }
 }
