@@ -27,10 +27,15 @@ public class WebConfig implements WebMvcConfigurer {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedHeader("Authorization");
-        config.addAllowedHeader("Content-Type");
-        config.addAllowedHeader("charset");
+        config.addAllowedOrigin("http://localhost:3001");
+        config.addAllowedOrigin("https://qcard.co.kr");
+        config.addAllowedOrigin("https://www.qcard.co.kr");
+        config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.setMaxAge(3600L);
+        config.addExposedHeader("Authorization");
+        config.addExposedHeader("");
+        config.addExposedHeader("Location");
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
