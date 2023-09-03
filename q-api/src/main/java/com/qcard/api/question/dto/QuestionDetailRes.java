@@ -18,22 +18,19 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionDetailRes {
-    private Long questionId;
-    private String title;
+    private Question question;
     private List<AnswerRes> answers;
 
 
     public QuestionDetailRes(List<Answer> answers, Account account, List<Long> hearts, Map<Long, Integer> heartCnts) {
-        this.questionId = answers.get(0).getQuestion().getId();
-        this.title = answers.get(0).getQuestion().getTitle();
+        this.question = answers.get(0).getQuestion();
         this.answers = answers.stream()
                 .map(answer -> new AnswerRes(answer, account, hearts, heartCnts.get(answer.getId())))
                 .collect(Collectors.toList());
     }
 
     public QuestionDetailRes(Question question, Account account) {
-        this.questionId = question.getId();
-        this.title = question.getTitle();
+        this.question = question;
         this.answers = new ArrayList<>();
     }
 }

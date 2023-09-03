@@ -4,14 +4,18 @@ import com.qcard.api.account.dto.AccountRes;
 import com.qcard.common.enums.Type;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.entity.Answer;
+import com.qcard.domains.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @NoArgsConstructor
 public class AnswerMeRes {
+    private Question question;
+
     private Long answerId;
     private Type type;
     private AccountRes account;
@@ -21,12 +25,13 @@ public class AnswerMeRes {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public AnswerMeRes(Answer answer) {
+    public AnswerMeRes(Integer hearCount, Answer answer) {
+        this.question = answer.getQuestion();
         this.answerId = answer.getId();
         this.type = answer.getType();
         this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
-        this.heartCount = 1;
+        this.heartCount = hearCount;
         this.createdAt = answer.getCreatedAt();
         this.modifiedAt = answer.getModifiedAt();
     }
