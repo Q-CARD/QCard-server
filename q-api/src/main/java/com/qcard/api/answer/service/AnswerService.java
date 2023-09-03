@@ -3,6 +3,7 @@ package com.qcard.api.answer.service;
 import com.qcard.api.answer.dto.AnswerCreateRes;
 import com.qcard.api.answer.dto.AnswerMeRes;
 import com.qcard.api.answer.dto.AnswerReq;
+import com.qcard.api.answer.dto.AnswerUpdateReq;
 import com.qcard.api.question.dto.QuestionDetailRes;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.heart.service.HeartDomainService;
@@ -49,14 +50,14 @@ public class AnswerService {
         return entities.stream().map(AnswerMeRes::new).collect(Collectors.toList());
     }
 
-    public AnswerMeRes updateAnswer(Account account, Long answerId, AnswerReq answerReq) throws AccessDeniedException {
+    public AnswerMeRes updateAnswer(Account account, Long answerId, AnswerUpdateReq answerUpdateReq) throws AccessDeniedException {
         Answer answer = answerDomainService.findAnswerById(answerId);
 
         if(answer.getAccount() != account) {
             throw new AccessDeniedException("본인의 답변만 수정 가능 합니다.");
         }
         else{
-            Answer newAnswer = answerDomainService.updateAnswer(answer, answerReq.getContent());
+            Answer newAnswer = answerDomainService.updateAnswer(answer, answerUpdateReq.getContent());
             return new AnswerMeRes(newAnswer);
         }
     }
