@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountDomainService accountDomainService;
@@ -31,15 +30,13 @@ public class AccountService {
                 accountReq.getEmail(),
                 accountReq.getName(),
                 jwtService.encryptPassword(accountReq.getPassword()));
-        log.info("password: " + account.getPassword());
         return new SignUpRes(account.getName());
     }
 
     public TokenRes signIn(SignInReq signInReq) {
         Account account = accountDomainService.findAccountByEmail(signInReq.getEmail());
-        Boolean isVerified = jwtService.isValidPassword(signInReq.getPassword(), account.getPassword());
 
-        if (isVerified) {
+        if (jwtService.isValidPassword(signInReq.getPassword(), account.getPassword())) {
             return jwtService.createJwt(account.getEmail(), account.getPassword());
         }
         else {
