@@ -1,10 +1,7 @@
 package com.qcard.api.answer.controller;
 
 import com.qcard.api.account.service.AccountService;
-import com.qcard.api.answer.dto.AnswerCreateRes;
-import com.qcard.api.answer.dto.AnswerMeRes;
-import com.qcard.api.answer.dto.AnswerReq;
-import com.qcard.api.answer.dto.AnswerRes;
+import com.qcard.api.answer.dto.*;
 import com.qcard.api.answer.service.AnswerService;
 import com.qcard.api.heart.dto.HeartReq;
 import com.qcard.api.heart.dto.HeartRes;
@@ -42,8 +39,8 @@ public class AnswerController {
 
     @PutMapping("/{answerId}")
     public ResponseEntity<AnswerMeRes> answerUpdate(@AuthAccount Account account, @PathVariable Long answerId,
-                                                    @RequestBody AnswerReq answerReq) throws AccessDeniedException {
-        AnswerMeRes response = answerService.updateAnswer(account, answerId, answerReq);
+                                                    @RequestBody AnswerUpdateReq answerUpdateReq) throws AccessDeniedException {
+        AnswerMeRes response = answerService.updateAnswer(account, answerId, answerUpdateReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
