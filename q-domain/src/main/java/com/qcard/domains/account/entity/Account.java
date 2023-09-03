@@ -25,7 +25,6 @@ public class Account {
     private String password;
 
     @Column
-    @Nullable
     private Boolean isDeleted;
 
     @Builder
