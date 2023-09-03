@@ -9,6 +9,7 @@ import com.qcard.api.account.dto.AccountRes;
 import com.qcard.jwt.JwtService;
 import com.qcard.jwt.TokenRes;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,25 +19,28 @@ public class AccountService {
     private final JwtService jwtService;
 
     public SignUpRes signUp(AccountReq accountReq) {
-
         if (!accountReq.isValid()) {
             throw new IllegalArgumentException("사용자에 대한 올바른 정보를 입력해주세요.");
+        }
+        else if (accountDomainService.existsAccountByEmail(accountReq.getEmail())) {
+            throw new IllegalArgumentException("이미 계정이 존재합니다.");
         }
 
         Account account = accountDomainService.createAccount(
                 accountReq.getEmail(),
                 accountReq.getName(),
-                jwtService.encryptPassword(accountReq.getPassword())
-        );
+                jwtService.encryptPassword(accountReq.getPassword()));
         return new SignUpRes(account.getName());
     }
 
     public TokenRes signIn(SignInReq signInReq) {
-        Account account = accountDomainService.findAccountByEmail(
-                signInReq.getEmail());
-        return jwtService.createJwt(
-                account.getEmail(),
-                account.getPassword()
-        );
+        Account account = accountDomainService.findAccountByEmail(signInReq.getEmail());
+
+        if (jwtService.isValidPassword(signInReq.getPassword(), account.getPassword())) {
+            return jwtService.createJwt(account.getEmail(), account.getPassword());
+        }
+        else {
+            throw new IllegalArgumentException("비밀번호가 올바르지 않습니다.");
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.qcard.api.account.dto.AccountRes;
 import com.qcard.api.account.service.AccountService;
 import com.qcard.auth.AuthAccount;
 import com.qcard.jwt.TokenRes;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,13 @@ public class AccountController {
     private final AccountDomainService accountDomainService;
 
     @PostMapping("/signup")
-    public ResponseEntity<SignUpRes> signUp(@RequestBody AccountReq accountReq) {
+    public ResponseEntity<SignUpRes> signUp(@Valid @RequestBody AccountReq accountReq) {
         SignUpRes response = accountService.signUp(accountReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<TokenRes> signIn(@RequestBody SignInReq signInReq) {
+    public ResponseEntity<TokenRes> signIn(@Valid @RequestBody SignInReq signInReq) {
         TokenRes response = accountService.signIn(signInReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
