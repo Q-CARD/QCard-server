@@ -1,4 +1,4 @@
-package com.qcard.auth;
+package com.qcard.resolver;
 
 import com.qcard.domains.account.service.AccountDomainService;
 import lombok.RequiredArgsConstructor;

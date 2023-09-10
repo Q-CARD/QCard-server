@@ -2,7 +2,7 @@ package com.qcard.api.heart.controller;
 
 import com.qcard.api.heart.dto.HeartRes;
 import com.qcard.api.heart.service.HeartService;
-import com.qcard.auth.AuthAccount;
+import com.qcard.resolver.AuthAccount;
 import com.qcard.domains.account.entity.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,6 @@
 package com.qcard.jwt;
 
+import com.qcard.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,11 +14,12 @@ public class JwtService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
+    private final RedisService redisService;
 
     public TokenRes createJwt(String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
+        redisService.setValues("a", "b");
         return jwtUtil.generateToken(authentication);
     }
 

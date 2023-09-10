@@ -7,7 +7,7 @@ import com.qcard.domains.account.service.AccountDomainService;
 import com.qcard.api.account.dto.AccountReq;
 import com.qcard.api.account.dto.AccountRes;
 import com.qcard.api.account.service.AccountService;
-import com.qcard.auth.AuthAccount;
+import com.qcard.resolver.AuthAccount;
 import com.qcard.jwt.TokenRes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.qcard.auth;
+package com.qcard.resolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
