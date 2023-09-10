@@ -25,7 +25,6 @@ public class Account {
     private String password;
 
     @Column
-    @Nullable
     private Boolean isDeleted;
 
     @Builder
@@ -33,6 +32,7 @@ public class Account {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.isDeleted = Boolean.FALSE;
     }
 
 }

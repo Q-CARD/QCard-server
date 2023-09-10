@@ -24,4 +24,8 @@ public class JwtService {
     public String encryptPassword(String password) {
         return passwordEncoder.encode(password);
     }
+
+    public Boolean isValidPassword(String password, String encryptedPassword) {
+        return passwordEncoder.matches(password, encryptedPassword);
+    }
 }

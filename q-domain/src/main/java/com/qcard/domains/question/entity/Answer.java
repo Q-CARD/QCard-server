@@ -40,4 +40,8 @@ public class Answer extends BaseTimeEntity {
         this.content = content;
         this.type = type;
     }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
