@@ -14,12 +14,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionMainRes {
-    private String category;
-    private List<QuestionRes> questions;
+    private QuestionZipRes questionZip;
+    private QuestionRes questionDaily;
 
-    public QuestionMainRes(List<Question> entities) {
-        this.category = entities.get(0).getCategory().toString();
-        this.questions = entities.subList(0, 5)
-                .stream().map(QuestionRes::new).collect(Collectors.toList());
+    public QuestionMainRes(QuestionZipRes questionZip, QuestionRes questionDaily) {
+        this.questionZip = questionZip;
+        this.questionDaily = questionDaily;
     }
 }

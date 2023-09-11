@@ -2,6 +2,7 @@ package com.qcard.api.question.service;
 
 import com.qcard.api.question.dto.QuestionMainRes;
 import com.qcard.api.question.dto.QuestionRes;
+import com.qcard.api.question.dto.QuestionZipRes;
 import com.qcard.common.enums.Category;
 import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.service.QuestionDomainService;
@@ -26,6 +27,8 @@ public class QuestionService {
     }
 
     public QuestionMainRes findQuestionOnMain() {
-        return new QuestionMainRes(questionDomainService.findQuestionByCategory(Category.CATEGORY_NW));
+        QuestionZipRes questionZip = new QuestionZipRes(questionDomainService.findQuestionByCategory(Category.randomCategory()));
+        QuestionRes questionRes = new QuestionRes(questionDomainService.findQuestionByRand());
+        return new QuestionMainRes(questionZip, questionRes);
     }
 }
