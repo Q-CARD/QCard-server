@@ -1,6 +1,7 @@
 package com.qcard.api.question.dto;
 
 import com.qcard.api.answer.dto.AnswerRes;
+import com.qcard.common.enums.Type;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.heart.entity.Heart;
 import com.qcard.domains.question.entity.Answer;
@@ -19,11 +20,20 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionDetailRes {
     private Question question;
+
+    private AnswerRes gpt;
     private List<AnswerRes> answers;
 
 
     public QuestionDetailRes(List<Answer> answers, Account account, List<Long> hearts, Map<Long, Integer> heartCnts) {
         this.question = answers.get(0).getQuestion();
+        for (Answer answer : answers) {
+            if (answer.getType() == Type.TYPE_GPT) {
+                this.gpt = new AnswerRes(answer);
+                answers.remove(answer);
+                break;
+            }
+        }
         this.answers = answers.stream()
                 .map(answer -> new AnswerRes(answer, account, hearts, heartCnts.get(answer.getId())))
                 .collect(Collectors.toList());
