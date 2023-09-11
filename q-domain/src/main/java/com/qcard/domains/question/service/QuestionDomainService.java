@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Service
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionDomainService {
     private final QuestionRepository questionRepository;
+    Random randomIdGenerator = new Random();
 
     @Transactional(readOnly = true)
     public List<Question> findQuestionByCategory(Category category) {
@@ -31,5 +34,11 @@ public class QuestionDomainService {
     public Question findQuestionByPk(Long id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 id입니다."));
+    }
+
+    public Question findQuestionByRand() {
+        Long count = questionRepository.count();
+        Long randId = ThreadLocalRandom.current().nextLong(count);
+        return questionRepository.findById(randId).orElseThrow(() -> new IllegalArgumentException("유효하지 않은 id입니다."));
     }
 }
