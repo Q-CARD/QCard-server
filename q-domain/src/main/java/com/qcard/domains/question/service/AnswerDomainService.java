@@ -34,7 +34,7 @@ public class AnswerDomainService {
 
     @Transactional(readOnly = true)
     public List<Answer> findAnswerByQuestionId(Long questionId) {
-        return answerRepository.findAllByQuestionId(questionId);
+        return answerRepository.findAllByQuestionIdOrderByTypeDesc(questionId);
     }
 
     @Transactional(readOnly = true)
