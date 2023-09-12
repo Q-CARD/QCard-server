@@ -28,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:3001");
+        config.addAllowedOrigin("https://q-card-dev.vercel.app/");
         config.addAllowedOrigin("https://qcard.co.kr");
         config.addAllowedOrigin("https://www.qcard.co.kr");
         config.addAllowedHeader("*");

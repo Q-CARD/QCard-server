@@ -2,6 +2,11 @@ package com.qcard.common.enums;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 @RequiredArgsConstructor
 public enum Category {
     CATEGORY_NW("네트워크"),
@@ -19,4 +24,8 @@ public enum Category {
 
 
     private final String label;
+
+    public static Category randomCategory() {
+        return Category.values()[ThreadLocalRandom.current().nextInt(Category.values().length)];
+    }
 }

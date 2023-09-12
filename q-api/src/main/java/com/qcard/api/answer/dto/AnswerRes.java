@@ -49,6 +49,12 @@ public class AnswerRes {
         }
     }
 
+    public AnswerRes(Answer answer) {
+        this.answerId = answer.getId();
+        this.type = answer.getType();
+        this.content = answer.getContent();
+    }
+
     private AccountRes createdAccountRes(Account account) {
         return new AccountRes(account.getName(), account.getEmail());
     }
