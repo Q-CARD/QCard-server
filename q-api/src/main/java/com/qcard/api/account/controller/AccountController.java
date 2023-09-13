@@ -9,6 +9,7 @@ import com.qcard.api.account.dto.AccountRes;
 import com.qcard.api.account.service.AccountService;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.jwt.TokenRes;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountService accountService;
     private final AccountDomainService accountDomainService;
+    private static final String ACCESS_HEADER = "Authorization";
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpRes> signUp(@Valid @RequestBody AccountReq accountReq) {
@@ -34,6 +36,13 @@ public class AccountController {
     public ResponseEntity<TokenRes> signIn(@Valid @RequestBody SignInReq signInReq) {
         TokenRes response = accountService.signIn(signInReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<TokenRes> accessTokenReissue(HttpServletRequest request) {
+        String bearerToken = request.getHeader(ACCESS_HEADER).substring(7);
+        accountService.reissueToken(bearerToken);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("/profile")

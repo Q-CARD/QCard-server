@@ -15,7 +15,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class AnswerMeRes {
     private Question question;
-
     private Long answerId;
     private Type type;
     private AccountRes account;

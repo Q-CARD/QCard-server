@@ -84,6 +84,7 @@ public class JwtUtil {
         return (expirationDate.getTime() - (new Date()).getTime());
     }
 
+
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);

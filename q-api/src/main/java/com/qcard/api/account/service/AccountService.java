@@ -8,6 +8,8 @@ import com.qcard.api.account.dto.AccountReq;
 import com.qcard.api.account.dto.AccountRes;
 import com.qcard.jwt.JwtService;
 import com.qcard.jwt.TokenRes;
+import com.qcard.redis.RedisService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     private final AccountDomainService accountDomainService;
     private final JwtService jwtService;
+    private final RedisService redisService;
 
     public SignUpRes signUp(AccountReq accountReq) {
         if (!accountReq.isValid()) {
@@ -41,6 +44,15 @@ public class AccountService {
         }
         else {
             throw new IllegalArgumentException("비밀번호가 올바르지 않습니다.");
+        }
+    }
+
+    public TokenRes reissueToken(String bearerToken) {
+        String email = redisService.getValues(bearerToken);
+        if(email != null) {
+            Account account = accountDomainService.findAccountByEmail(email);
+            // TODO: access만 발급하는 함수 필요
+            jwtService.createJwt(account.getEmail(), account.getPassword());
         }
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,10 @@ public class JwtService {
     public TokenRes createJwt(String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        redisService.setValues("a", "b");
-        return jwtUtil.generateToken(authentication);
+        TokenRes tokenRes = jwtUtil.generateToken(authentication);
+        redisService.setValues(tokenRes.getRefreshToken(), email, Duration.ofDays(14));
+
+        return tokenRes;
     }
 
     public String encryptPassword(String password) {
