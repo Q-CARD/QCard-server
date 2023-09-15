@@ -38,11 +38,18 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/reissue")
+    @GetMapping("/reissue")
     public ResponseEntity<TokenRes> accessTokenReissue(HttpServletRequest request) {
         String bearerToken = request.getHeader(ACCESS_HEADER).substring(7);
-        accountService.reissueToken(bearerToken);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        TokenRes response = accountService.reissueToken(bearerToken);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logOut(HttpServletRequest request) {
+        String refreshToken = request.getHeader(ACCESS_HEADER).substring(7);
+        accountService.logout(refreshToken);
+        return new ResponseEntity<>("로그아웃 성공", HttpStatus.OK);
     }
 
     @GetMapping("/profile")

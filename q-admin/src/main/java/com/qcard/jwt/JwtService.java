@@ -26,6 +26,13 @@ public class JwtService {
         return tokenRes;
     }
 
+    public TokenRes reissueJwt(String email, String password, String refreshToken) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        return jwtUtil.reissueToken(authentication, refreshToken);
+    }
+
     public String encryptPassword(String password) {
         return passwordEncoder.encode(password);
     }

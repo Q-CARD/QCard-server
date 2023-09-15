@@ -47,12 +47,23 @@ public class AccountService {
         }
     }
 
-    public TokenRes reissueToken(String bearerToken) {
-        String email = redisService.getValues(bearerToken);
+    public TokenRes reissueToken(String refreshToken) {
+        String email = redisService.getValues(refreshToken);
         if(email != null) {
             Account account = accountDomainService.findAccountByEmail(email);
-            // TODO: access만 발급하는 함수 필요
-            jwtService.createJwt(account.getEmail(), account.getPassword());
+            return jwtService.reissueJwt(account.getEmail(), account.getPassword(), refreshToken);
+        }
+        else {
+            throw new IllegalArgumentException("회원가입을 한 적 없는 유저입니다.");
+        }
+    }
+
+    public void logout(String refreshToken) {
+        try{
+            redisService.deleteValues(refreshToken);
+        }
+        catch(Exception e){
+            throw new RuntimeException("로그아웃에 실패했습니다.");
         }
     }
 }
