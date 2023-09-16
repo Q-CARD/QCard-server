@@ -1,11 +1,8 @@
 package com.qcard.api.account.service;
 
-import com.qcard.api.account.dto.SignInReq;
-import com.qcard.api.account.dto.SignUpRes;
+import com.qcard.api.account.dto.*;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.service.AccountDomainService;
-import com.qcard.api.account.dto.AccountReq;
-import com.qcard.api.account.dto.AccountRes;
 import com.qcard.jwt.JwtService;
 import com.qcard.jwt.TokenRes;
 import com.qcard.redis.RedisService;
@@ -15,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountDomainService accountDomainService;
@@ -58,12 +56,15 @@ public class AccountService {
         }
     }
 
-    public void logout(String refreshToken) {
-        try{
+    public LogOutRes logout(String refreshToken) {
+        String email = redisService.getValues(refreshToken);
+        log.info("email: " + email);
+        if(email != null){
             redisService.deleteValues(refreshToken);
+            return new LogOutRes(email);
         }
-        catch(Exception e){
-            throw new RuntimeException("로그아웃에 실패했습니다.");
+        else{
+            throw new IllegalArgumentException("refresh token이 없습니다.");
         }
     }
 }

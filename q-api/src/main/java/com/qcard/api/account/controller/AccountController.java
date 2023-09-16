@@ -1,11 +1,8 @@
 package com.qcard.api.account.controller;
 
-import com.qcard.api.account.dto.SignInReq;
-import com.qcard.api.account.dto.SignUpRes;
+import com.qcard.api.account.dto.*;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.service.AccountDomainService;
-import com.qcard.api.account.dto.AccountReq;
-import com.qcard.api.account.dto.AccountRes;
 import com.qcard.api.account.service.AccountService;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.jwt.TokenRes;
@@ -45,9 +42,9 @@ public class AccountController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logOut(HttpServletRequest request) {
-        accountService.logout(request.getHeader(ACCESS_HEADER));
-        return new ResponseEntity<>("로그아웃 성공", HttpStatus.OK);
+    public ResponseEntity<LogOutRes> logOut(HttpServletRequest request) {
+        LogOutRes response = accountService.logout(request.getHeader(ACCESS_HEADER));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/profile")
