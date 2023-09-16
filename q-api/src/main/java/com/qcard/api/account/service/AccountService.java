@@ -52,7 +52,7 @@ public class AccountService {
             return jwtService.reissueJwt(account.getEmail(), account.getPassword(), refreshToken);
         }
         else {
-            throw new IllegalArgumentException("회원가입을 한 적 없는 유저입니다.");
+            throw new IllegalArgumentException("잘못된 refresh token입니다.");
         }
     }
 
@@ -64,7 +64,7 @@ public class AccountService {
             return new LogOutRes(email);
         }
         else{
-            throw new IllegalArgumentException("refresh token이 없습니다.");
+            throw new IllegalArgumentException("잘못된 refresh token입니다.");
         }
     }
 }
