@@ -24,15 +24,11 @@ public class Account {
     @Column
     private String password;
 
-    @Column
-    private Boolean isDeleted;
-
     @Builder
     public Account(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.isDeleted = Boolean.FALSE;
     }
 
 }

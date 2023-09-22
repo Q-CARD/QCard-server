@@ -53,6 +53,25 @@ public class JwtUtil {
                 .build();
     }
 
+    public TokenRes reissueToken(Authentication authentication, String refreshToken) {
+        Long current = (new Date()).getTime();
+
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        String accessToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(new Date(current + ACCESS_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256).compact();
+
+        return TokenRes.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
@@ -83,6 +102,7 @@ public class JwtUtil {
                 .getBody().getExpiration();
         return (expirationDate.getTime() - (new Date()).getTime());
     }
+
 
     public boolean validateToken(String token) {
         try {
