@@ -1,4 +1,4 @@
-package com.qcard;
+package com.qcard.service;
 
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.service.AccountDomainService;

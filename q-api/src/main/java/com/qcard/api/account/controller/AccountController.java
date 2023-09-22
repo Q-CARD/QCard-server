@@ -1,14 +1,12 @@
 package com.qcard.api.account.controller;
 
-import com.qcard.api.account.dto.SignInReq;
-import com.qcard.api.account.dto.SignUpRes;
+import com.qcard.api.account.dto.*;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.account.service.AccountDomainService;
-import com.qcard.api.account.dto.AccountReq;
-import com.qcard.api.account.dto.AccountRes;
 import com.qcard.api.account.service.AccountService;
-import com.qcard.auth.AuthAccount;
+import com.qcard.resolver.AuthAccount;
 import com.qcard.jwt.TokenRes;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountService accountService;
     private final AccountDomainService accountDomainService;
+    private static final String ACCESS_HEADER = "Authorization";
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpRes> signUp(@Valid @RequestBody AccountReq accountReq) {
@@ -33,6 +32,18 @@ public class AccountController {
     @PostMapping("/signin")
     public ResponseEntity<TokenRes> signIn(@Valid @RequestBody SignInReq signInReq) {
         TokenRes response = accountService.signIn(signInReq);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/reissue")
+    public ResponseEntity<TokenRes> accessTokenReissue(HttpServletRequest request) {
+        TokenRes response = accountService.reissueToken(request.getHeader(ACCESS_HEADER));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<LogOutRes> logOut(HttpServletRequest request) {
+        LogOutRes response = accountService.logout(request.getHeader(ACCESS_HEADER));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

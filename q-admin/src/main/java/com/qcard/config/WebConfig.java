@@ -1,6 +1,6 @@
 package com.qcard.config;
 
-import com.qcard.auth.AuthAccountArgumentResolver;
+import com.qcard.resolver.AuthAccountArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
