@@ -1,6 +1,7 @@
 package com.qcard.domains.question.entity;
 
 import com.qcard.common.enums.Category;
+import com.qcard.common.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,10 +24,15 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Column(length = 31)
+    @Enumerated(EnumType.STRING)
+    private QuestionType type;
+
     @Builder
-    public Question(String title, Category category) {
+    public Question(String title, Category category, QuestionType questionType) {
         this.title = title;
         this.category = category;
+        this.type = questionType;
     }
 
 }
