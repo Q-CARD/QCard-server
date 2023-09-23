@@ -31,14 +31,14 @@ public class Answer extends BaseTimeEntity {
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private AnswerType answerType;
+    private AnswerType type;
 
     @Builder
-    public Answer(Question question, Account account, String content, AnswerType answerType) {
+    public Answer(Question question, Account account, String content, AnswerType type) {
         this.question = question;
         this.account = account;
         this.content = content;
-        this.answerType = answerType;
+        this.type = type;
     }
 
     public void updateContent(String content) {

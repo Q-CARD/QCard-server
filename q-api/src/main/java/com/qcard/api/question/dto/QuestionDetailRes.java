@@ -26,7 +26,7 @@ public class QuestionDetailRes {
     public QuestionDetailRes(List<Answer> answers, Account account, List<Long> hearts, Map<Long, Integer> heartCnts) {
         this.question = answers.get(0).getQuestion();
         for (Answer answer : answers) {
-            if (answer.getAnswerType() == AnswerType.TYPE_GPT) {
+            if (answer.getType() == AnswerType.TYPE_GPT) {
                 this.gpt = new AnswerRes(answer);
                 answers.remove(answer);
                 break;

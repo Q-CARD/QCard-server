@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class AnswerMeRes {
     private Question question;
     private Long answerId;
-    private AnswerType answerType;
+    private AnswerType type;
     private AccountRes account;
     private String content;
 
@@ -26,7 +26,7 @@ public class AnswerMeRes {
     public AnswerMeRes(Integer hearCount, Answer answer) {
         this.question = answer.getQuestion();
         this.answerId = answer.getId();
-        this.answerType = answer.getAnswerType();
+        this.type = answer.getType();
         this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
         this.heartCount = hearCount;

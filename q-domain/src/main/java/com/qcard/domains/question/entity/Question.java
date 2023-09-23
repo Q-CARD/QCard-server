@@ -29,10 +29,10 @@ public class Question {
     private QuestionType type;
 
     @Builder
-    public Question(String title, Category category, QuestionType questionType) {
+    public Question(String title, Category category, QuestionType type) {
         this.title = title;
         this.category = category;
-        this.type = questionType;
+        this.type = type;
     }
 
 }

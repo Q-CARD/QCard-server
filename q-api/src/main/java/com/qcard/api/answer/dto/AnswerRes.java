@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AnswerRes {
     private Long answerId;
-    private AnswerType answerType;
+    private AnswerType type;
     private AccountRes account;
     private String content;
 
@@ -28,7 +28,7 @@ public class AnswerRes {
 
     public AnswerRes(Answer answer, Account myAccount, List<Long> heartList, Integer heartCount) {
         this.answerId = answer.getId();
-        this.answerType = answer.getAnswerType();
+        this.type = answer.getType();
         this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
         this.heartCount = heartCount;
@@ -48,7 +48,7 @@ public class AnswerRes {
 
     public AnswerRes(Answer answer) {
         this.answerId = answer.getId();
-        this.answerType = answer.getAnswerType();
+        this.type = answer.getType();
         this.content = answer.getContent();
     }
 
