@@ -1,10 +1,9 @@
 package com.qcard.api.question.controller;
 
 import com.qcard.api.answer.service.AnswerService;
-import com.qcard.api.question.dto.QuestionDetailRes;
-import com.qcard.api.question.dto.QuestionMainRes;
-import com.qcard.api.question.dto.QuestionRes;
+import com.qcard.api.question.dto.*;
 import com.qcard.api.question.service.QuestionService;
+import com.qcard.common.enums.QuestionType;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.common.enums.Category;
 import com.qcard.domains.account.entity.Account;
@@ -22,6 +21,12 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
+
+    @PostMapping("")
+    private ResponseEntity<QuestionRes> questionCreate(@AuthAccount Account account, @RequestBody QuestionReq questionReq) {
+        QuestionRes response = questionService.createQuestion(account, questionReq);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
 
     @GetMapping("/categories/{category}")
     private ResponseEntity<List<QuestionRes>> questionsByCategoryFind(@PathVariable Category category) {

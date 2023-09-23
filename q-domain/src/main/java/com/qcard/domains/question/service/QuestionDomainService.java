@@ -1,6 +1,8 @@
 package com.qcard.domains.question.service;
 
 import com.qcard.common.enums.Category;
+import com.qcard.common.enums.QuestionType;
+import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +42,14 @@ public class QuestionDomainService {
         Long count = questionRepository.count();
         Long randId = ThreadLocalRandom.current().nextLong(count);
         return questionRepository.findById(randId).orElseThrow(() -> new IllegalArgumentException("유효하지 않은 id입니다."));
+    }
+
+    public Question createQuestion(Account account, String title, Category category, QuestionType type) {
+        return questionRepository.save(Question.builder()
+                .title(title)
+                .category(category)
+                .type(type)
+                .build()
+        );
     }
 }
