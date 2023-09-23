@@ -5,6 +5,7 @@ import com.qcard.api.answer.dto.AnswerMeRes;
 import com.qcard.api.answer.dto.AnswerReq;
 import com.qcard.api.answer.dto.AnswerUpdateReq;
 import com.qcard.api.question.dto.QuestionDetailRes;
+import com.qcard.common.enums.SortType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.heart.service.HeartDomainService;
 import com.qcard.domains.question.entity.Question;
@@ -37,7 +38,7 @@ public class AnswerService {
         return new AnswerCreateRes(answer.getContent());
     }
 
-    public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId) {
+    public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId, SortType sort) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
         if(entities.isEmpty()) {
             Question question = questionDomainService.findQuestionById(questionId);
@@ -48,7 +49,7 @@ public class AnswerService {
         List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)
                 .stream().map(heart -> heart.getAnswer().getId()).toList();
 
-        return new QuestionDetailRes(entities, account, heartedAnswerList, heartCounts);
+        return new QuestionDetailRes(entities, account, heartedAnswerList, heartCounts, sort);
     }
 
     public List<AnswerMeRes> getAnswersByAuth(Account account) {
