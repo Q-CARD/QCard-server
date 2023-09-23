@@ -1,11 +1,10 @@
 package com.qcard.domains.question.service;
 
-import com.qcard.common.enums.Type;
+import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.repository.AnswerRepository;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
-import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,7 @@ public class AnswerDomainService {
                         .question(question)
                         .account(account)
                         .content(content)
-                        .type(Type.TYPE_ANSWER)
+                        .type(AnswerType.TYPE_ANSWER)
                         .build()
         );
     }

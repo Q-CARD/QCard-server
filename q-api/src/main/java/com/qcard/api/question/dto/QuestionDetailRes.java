@@ -1,15 +1,13 @@
 package com.qcard.api.question.dto;
 
 import com.qcard.api.answer.dto.AnswerRes;
-import com.qcard.common.enums.Type;
+import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.heart.entity.Heart;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class QuestionDetailRes {
     public QuestionDetailRes(List<Answer> answers, Account account, List<Long> hearts, Map<Long, Integer> heartCnts) {
         this.question = answers.get(0).getQuestion();
         for (Answer answer : answers) {
-            if (answer.getType() == Type.TYPE_GPT) {
+            if (answer.getAnswerType() == AnswerType.TYPE_GPT) {
                 this.gpt = new AnswerRes(answer);
                 answers.remove(answer);
                 break;

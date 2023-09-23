@@ -1,14 +1,11 @@
 package com.qcard.api.answer.dto;
 
 import com.qcard.api.account.dto.AccountRes;
-import com.qcard.common.enums.Type;
+import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.heart.entity.Heart;
 import com.qcard.domains.question.entity.Answer;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.StreamingHttpOutputMessage;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AnswerRes {
     private Long answerId;
-    private Type type;
+    private AnswerType answerType;
     private AccountRes account;
     private String content;
 
@@ -31,7 +28,7 @@ public class AnswerRes {
 
     public AnswerRes(Answer answer, Account myAccount, List<Long> heartList, Integer heartCount) {
         this.answerId = answer.getId();
-        this.type = answer.getType();
+        this.answerType = answer.getAnswerType();
         this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
         this.heartCount = heartCount;
@@ -51,7 +48,7 @@ public class AnswerRes {
 
     public AnswerRes(Answer answer) {
         this.answerId = answer.getId();
-        this.type = answer.getType();
+        this.answerType = answer.getAnswerType();
         this.content = answer.getContent();
     }
 

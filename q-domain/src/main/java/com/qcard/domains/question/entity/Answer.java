@@ -1,7 +1,7 @@
 package com.qcard.domains.question.entity;
 
 import com.qcard.common.entity.BaseTimeEntity;
-import com.qcard.common.enums.Type;
+import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,14 +31,14 @@ public class Answer extends BaseTimeEntity {
     private String content;
 
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private AnswerType answerType;
 
     @Builder
-    public Answer(Question question, Account account, String content, Type type) {
+    public Answer(Question question, Account account, String content, AnswerType answerType) {
         this.question = question;
         this.account = account;
         this.content = content;
-        this.type = type;
+        this.answerType = answerType;
     }
 
     public void updateContent(String content) {
