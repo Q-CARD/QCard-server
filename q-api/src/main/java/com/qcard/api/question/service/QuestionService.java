@@ -20,18 +20,10 @@ public class QuestionService {
     private final QuestionDomainService questionDomainService;
 
     public List<QuestionRes> findQuestionsByParam(Account account, QuestionParam questionParam) {
-        List<Question> entities;
-        Boolean isMine = questionParam.getMine();
-        log.info("Boolean: " + isMine);
+        List<Question> entities = questionDomainService.findQuestionByCategoryAndTypeAndAccount(
+                questionParam.getCategory(), questionParam.getType(), account
+        );
 
-        if(isMine) {
-            entities = questionDomainService.findQuestionByCategoryAndTypeAndAccount(
-                    questionParam.getCategory(), questionParam.getType(), account);
-        }
-        else {
-            entities = questionDomainService.findQuestionByCategoryAndType(
-                    questionParam.getCategory(), questionParam.getType());
-        }
         return entities.stream().map(QuestionRes::new).collect(Collectors.toList());
     }
 
