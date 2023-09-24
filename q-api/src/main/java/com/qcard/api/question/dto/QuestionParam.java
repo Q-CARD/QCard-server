@@ -3,6 +3,7 @@ package com.qcard.api.question.dto;
 import com.qcard.common.enums.Category;
 import com.qcard.common.enums.QuestionType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ public class QuestionParam {
     public QuestionParam(QuestionType type, Category category, Boolean mine, Integer size, Integer page) {
         this.type = type == null ? QuestionType.TYPE_QCARD : type;
         this.category = category;
-        this.mine = mine != null && mine;
+        this.mine = mine == null ? false : mine;
         this.page = page == null ? 0 : page;
         this.size = size == null ? 10 : size;
     }

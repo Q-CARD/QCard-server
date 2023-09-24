@@ -27,6 +27,16 @@ public class QuestionDomainService {
         return questionRepository.findAllByCategory(category);
     }
 
+    @Transactional(readOnly = true)
+    public List<Question> findQuestionByCategoryAndType(Category category, QuestionType type) {
+        return questionRepository.findQuestionsByCategoryAndType(category, type);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Question> findQuestionByCategoryAndTypeAndAccount(Category category, QuestionType type, Account account) {
+        return questionRepository.findQuestionsByCategoryAndTypeAndAccount(category, type, account);
+    }
+
     public Question findQuestionById(Long questionId) {
         return questionRepository.findById(questionId)
                 .orElseThrow(() -> new IllegalArgumentException(questionId + ": 존재하지 않는 질문입니다."));
@@ -47,6 +57,7 @@ public class QuestionDomainService {
     public Question createQuestion(Account account, String title, Category category, QuestionType type) {
         return questionRepository.save(Question.builder()
                 .title(title)
+                .account(account)
                 .category(category)
                 .type(type)
                 .build()

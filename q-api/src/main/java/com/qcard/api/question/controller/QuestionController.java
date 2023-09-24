@@ -28,9 +28,9 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/categories/{category}")
-    private ResponseEntity<List<QuestionRes>> questionsByCategoryFind(@PathVariable Category category) {
-        List<QuestionRes> res = questionService.findQuestionByCategory(category);
+    @GetMapping("")
+    private ResponseEntity<List<QuestionRes>> questionList(@AuthAccount Account account, QuestionParam questionParam) {
+        List<QuestionRes> res = questionService.findQuestionsByParam(account, questionParam);
         return ResponseEntity.ok(res);
     }
     

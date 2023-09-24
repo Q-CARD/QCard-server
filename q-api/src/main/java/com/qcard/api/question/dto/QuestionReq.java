@@ -8,5 +8,4 @@ import lombok.Getter;
 public class QuestionReq {
     private String title;
     private Category category;
-    private QuestionType type;
 }
