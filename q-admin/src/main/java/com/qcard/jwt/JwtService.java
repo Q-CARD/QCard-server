@@ -2,6 +2,7 @@ package com.qcard.jwt;
 
 import com.qcard.redis.RedisService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class JwtService {
     private final JwtUtil jwtUtil;
@@ -22,7 +24,6 @@ public class JwtService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         TokenRes tokenRes = jwtUtil.generateToken(authentication);
         redisService.setValues(tokenRes.getRefreshToken(), email, Duration.ofDays(14));
-
         return tokenRes;
     }
 
