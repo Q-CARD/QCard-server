@@ -22,7 +22,6 @@ public class JwtService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         TokenRes tokenRes = jwtUtil.generateToken(authentication);
         redisService.setValues(tokenRes.getRefreshToken(), email, Duration.ofDays(14));
-
         return tokenRes;
     }
 

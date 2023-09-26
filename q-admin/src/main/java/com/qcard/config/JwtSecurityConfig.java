@@ -1,5 +1,6 @@
 package com.qcard.config;
 
+import com.qcard.filter.JwtExceptionFilter;
 import com.qcard.jwt.JwtFilter;
 import com.qcard.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,9 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
     @Override
     public void configure(HttpSecurity httpSecurity) {
+        JwtExceptionFilter jwtExceptionFilter = new JwtExceptionFilter();
         JwtFilter jwtFilter = new JwtFilter(jwtUtil);
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtExceptionFilter, JwtFilter.class);
     }
 }
