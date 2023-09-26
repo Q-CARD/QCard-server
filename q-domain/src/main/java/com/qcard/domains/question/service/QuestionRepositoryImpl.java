@@ -1,5 +1,6 @@
 package com.qcard.domains.question.service;
 
+import com.qcard.common.dto.QuestionFilterReq;
 import com.qcard.common.enums.Category;
 import com.qcard.common.enums.QuestionType;
 import com.qcard.domains.account.entity.Account;
@@ -25,26 +26,33 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
 
 
     @Override
-    public Page<Question> findAllTypeCategoryAccount(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
-        List<Question> content = getQuestions(type, category, account, isMine, pageable);
-        JPAQuery<Long> countQuery = getCount(type, category, isMine, account);
+    public Page<Question> findAllTypeCategoryAccount(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
+        List<Question> content = getQuestions(questionFilterReq, account, pageable);
+        JPAQuery<Long> countQuery = getCount(questionFilterReq, account);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
-    private List<Question> getQuestions(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
-        return jpaQueryFactory.selectFrom(question)
-                .where(typeEq(type), categoryEq(category), accountEq(isMine, account))
+    private List<Question> getQuestions(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
+        return jpaQueryFactory
+                .selectFrom(question)
+                .where(typeEq(questionFilterReq.getType()),
+                        categoryEq(questionFilterReq.getCategory()),
+                        accountEq(questionFilterReq.getMine(), account)
+                )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
     }
 
-    private JPAQuery<Long> getCount(QuestionType type, Category category, Boolean isMine, Account account) {
+    private JPAQuery<Long> getCount(QuestionFilterReq questionFilterReq, Account account) {
         return jpaQueryFactory
                 .select(question.count())
                 .from(question)
-                .where(typeEq(type), categoryEq(category), accountEq(isMine, account));
+                .where(typeEq(questionFilterReq.getType()),
+                        categoryEq(questionFilterReq.getCategory()),
+                        accountEq(questionFilterReq.getMine(), account)
+                );
     }
 
     private BooleanExpression typeEq(final QuestionType type) {

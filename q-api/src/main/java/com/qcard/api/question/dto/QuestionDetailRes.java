@@ -39,7 +39,7 @@ public class QuestionDetailRes {
         if(sort == SortType.SORT_HEART) {
             this.answers = answers.stream()
                     .map(answer -> new AnswerRes(answer, account, hearts, heartCnts.get(answer.getId())))
-                    .sorted(Comparator.comparingInt(AnswerRes::getHeartCount))
+                    .sorted((ans1, ans2) -> ans2.getHeartCount().compareTo(ans1.getHeartCount()))
                     .collect(Collectors.toList());
         }
         else {

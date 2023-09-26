@@ -1,6 +1,7 @@
 package com.qcard.api.question.service;
 
 import com.qcard.api.question.dto.*;
+import com.qcard.common.dto.QuestionFilterReq;
 import com.qcard.common.enums.Category;
 import com.qcard.common.enums.QuestionType;
 import com.qcard.domains.account.entity.Account;
@@ -12,9 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -22,19 +20,18 @@ public class QuestionService {
     private final QuestionDomainService questionDomainService;
 
     //TODO: QuestionRes로 변환작업 필요
-    public Page<Question> findQuestionsByParam(Account account, QuestionParam questionParam, Pageable pageable) {
-        Page<Question> entities = questionDomainService.findQuestionByParam(questionParam.getType(), questionParam.getCategory(), account, questionParam.getMine(), pageable);
-
-        return entities;
+    public Page<QuestionRes> findQuestionsByParam(Account account, QuestionFilterReq questionFilterReq, Pageable pageable) {
+        Page<Question> entities = questionDomainService.findQuestionByParam(questionFilterReq, account, pageable);
+        return entities.map(entity -> new QuestionRes(entity, account));
     }
 
     public QuestionMainRes findQuestionOnMain() {
         QuestionZipRes questionZip = new QuestionZipRes(questionDomainService.findQuestionByCategory(Category.randomCategory()));
-        QuestionRes questionRes = new QuestionRes(questionDomainService.findQuestionByRand());
-        return new QuestionMainRes(questionZip, questionRes);
+        QuestionSimpleRes questionSimpleRes = new QuestionSimpleRes(questionDomainService.findQuestionByRand());
+        return new QuestionMainRes(questionZip, questionSimpleRes);
     }
 
-    public QuestionRes createQuestion(Account account, QuestionReq questionReq) {
+    public QuestionSimpleRes createQuestion(Account account, QuestionReq questionReq) {
         Question question = questionDomainService.createQuestion(
                 account,
                 questionReq.getTitle(),
@@ -42,6 +39,6 @@ public class QuestionService {
                 QuestionType.TYPE_CUSTOM
         );
 
-        return new QuestionRes(question);
+        return new QuestionSimpleRes(question);
     }
 }

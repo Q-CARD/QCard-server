@@ -1,5 +1,6 @@
 package com.qcard.domains.question.service;
 
+import com.qcard.common.dto.QuestionFilterReq;
 import com.qcard.common.enums.Category;
 import com.qcard.common.enums.QuestionType;
 import com.qcard.domains.account.entity.Account;
@@ -32,8 +33,8 @@ public class QuestionDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Question> findQuestionByParam(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
-        return questionRepository.findAllTypeCategoryAccount(type, category, account, isMine, pageable);
+    public Page<Question> findQuestionByParam(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
+        return questionRepository.findAllTypeCategoryAccount(questionFilterReq, account, pageable);
     }
 
     public Question findQuestionById(Long questionId) {
