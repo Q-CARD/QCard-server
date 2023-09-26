@@ -33,7 +33,7 @@ public class QuestionDomainService {
 
     @Transactional(readOnly = true)
     public Page<Question> findQuestionByParam(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
-        return questionRepository.findQuestionsByParamPage(type, category, account, isMine, pageable);
+        return questionRepository.findAllTypeCategoryAccount(type, category, account, isMine, pageable);
     }
 
     public Question findQuestionById(Long questionId) {

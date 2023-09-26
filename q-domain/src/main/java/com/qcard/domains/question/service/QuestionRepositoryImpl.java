@@ -8,24 +8,24 @@ import com.qcard.domains.question.repository.QuestionRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.qcard.domains.question.entity.QQuestion.question;
 
-public class QuestionRepositoryCustomImpl implements QuestionRepositoryCustom {
+@Service
+@RequiredArgsConstructor
+public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public QuestionRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
-        this.jpaQueryFactory = jpaQueryFactory;
-    }
 
     @Override
-    public Page<Question> findQuestionsByParamPage(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
+    public Page<Question> findAllTypeCategoryAccount(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
         List<Question> content = getQuestions(type, category, account, isMine, pageable);
         JPAQuery<Long> countQuery = getCount(type, category, isMine, account);
 
