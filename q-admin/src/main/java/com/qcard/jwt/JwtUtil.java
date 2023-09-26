@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -22,8 +23,8 @@ import java.util.stream.Collectors;
 public class JwtUtil {
     private static final String AUTHORITIES_KEY = "role";
     private static final String BEARER_TYPE = "Bearer";
-    private static final Long ACCESS_TOKEN_EXPIRE_TIME = (long) (1000 * 60 * 30 * 24 * 3);
-    private static final Long REFRESH_TOKEN_EXPIRE_TIME = (long) (1000 * 60 * 60 * 24 * 7);
+    private static final Long ACCESS_TOKEN_EXPIRE_TIME = Duration.ofHours(1).toMillis();
+    private static final Long REFRESH_TOKEN_EXPIRE_TIME = Duration.ofDays(14).toMillis();
     private final Key key;
 
     public JwtUtil(@Value("${spring.jwt.secret}") String secretKey) {
