@@ -8,6 +8,8 @@ import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,12 +21,11 @@ import java.util.stream.Collectors;
 public class QuestionService {
     private final QuestionDomainService questionDomainService;
 
-    public List<QuestionRes> findQuestionsByParam(Account account, QuestionParam questionParam) {
-        List<Question> entities = questionDomainService.findQuestionByCategoryAndTypeAndAccount(
-                questionParam.getCategory(), questionParam.getType(), account
-        );
+    //TODO: QuestionRes로 변환작업 필요
+    public Page<Question> findQuestionsByParam(Account account, QuestionParam questionParam, Pageable pageable) {
+        Page<Question> entities = questionDomainService.findQuestionByParam(questionParam.getType(), questionParam.getCategory(), account, questionParam.getMine(), pageable);
 
-        return entities.stream().map(QuestionRes::new).collect(Collectors.toList());
+        return entities;
     }
 
     public QuestionMainRes findQuestionOnMain() {

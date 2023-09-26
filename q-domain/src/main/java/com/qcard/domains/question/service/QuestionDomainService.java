@@ -7,12 +7,16 @@ import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static com.qcard.domains.account.entity.QAccount.account;
 
 @Slf4j
 @Service
@@ -28,13 +32,8 @@ public class QuestionDomainService {
     }
 
     @Transactional(readOnly = true)
-    public List<Question> findQuestionByCategoryAndType(Category category, QuestionType type) {
-        return questionRepository.findQuestionsByCategoryAndType(category, type);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Question> findQuestionByCategoryAndTypeAndAccount(Category category, QuestionType type, Account account) {
-        return questionRepository.findQuestionsByCategoryAndTypeAndAccount(category, type, account);
+    public Page<Question> findQuestionByParam(QuestionType type, Category category, Account account, Boolean isMine, Pageable pageable) {
+        return questionRepository.findQuestionsByParamPage(type, category, account, isMine, pageable);
     }
 
     public Question findQuestionById(Long questionId) {

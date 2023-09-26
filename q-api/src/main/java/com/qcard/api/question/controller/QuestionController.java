@@ -4,10 +4,13 @@ import com.qcard.api.answer.service.AnswerService;
 import com.qcard.api.question.dto.*;
 import com.qcard.api.question.service.QuestionService;
 import com.qcard.common.enums.SortType;
+import com.qcard.domains.question.entity.Question;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.common.enums.Category;
 import com.qcard.domains.account.entity.Account;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +31,10 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    //TODO: questionRes로 변환작업 필요
     @GetMapping("")
-    private ResponseEntity<List<QuestionRes>> questionList(@AuthAccount Account account, QuestionParam questionParam) {
-        List<QuestionRes> res = questionService.findQuestionsByParam(account, questionParam);
+    private ResponseEntity<Page<Question>> questionList(@AuthAccount Account account, QuestionParam questionParam, Pageable pageable) {
+        Page<Question> res = questionService.findQuestionsByParam(account, questionParam, pageable);
         return ResponseEntity.ok(res);
     }
     
