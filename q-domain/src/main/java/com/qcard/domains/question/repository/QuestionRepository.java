@@ -8,10 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface QuestionRepository extends JpaRepository<Question, Long> {
+public interface QuestionRepository extends JpaRepository<Question, Long>, QuestionRepositoryCustom {
     List<Question> findAllByCategory(Category category);
-
-    List<Question> findQuestionsByCategoryAndType(Category category, QuestionType type);
-
-    List<Question> findQuestionsByCategoryAndTypeAndAccount(Category category, QuestionType type, Account account);
 }
