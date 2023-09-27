@@ -67,4 +67,8 @@ public class AccountService {
             throw new IllegalArgumentException("잘못된 refresh token입니다.");
         }
     }
+
+    public AccountRes modifyAccount(Account account, AccountModifyReq request) {
+        return new AccountRes(accountDomainService.updateAccount(account, request.getName(), request.getEmail(), request.getProfile()));
+    }
 }

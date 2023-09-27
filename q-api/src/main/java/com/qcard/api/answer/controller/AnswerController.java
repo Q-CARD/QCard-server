@@ -3,9 +3,12 @@ package com.qcard.api.answer.controller;
 import com.qcard.api.account.service.AccountService;
 import com.qcard.api.answer.dto.*;
 import com.qcard.api.answer.service.AnswerService;
+import com.qcard.common.enums.Category;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.domains.account.entity.Account;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,6 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerService answerService;
-    private final AccountService accountService;
 
     @PostMapping("")
     public ResponseEntity<AnswerCreateRes> answerCreate(@AuthAccount Account account, @RequestBody AnswerReq answerReq) {
@@ -28,8 +30,8 @@ public class AnswerController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account) {
-        List<AnswerMeRes> response = answerService.getAnswersByAuth(account);
+    public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account, @RequestParam Category category) {
+        List<AnswerMeRes> response = answerService.getAnswersByAuth(account, category);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

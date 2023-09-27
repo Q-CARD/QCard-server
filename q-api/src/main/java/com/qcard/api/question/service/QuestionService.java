@@ -1,34 +1,46 @@
 package com.qcard.api.question.service;
 
-import com.qcard.api.question.dto.QuestionMainRes;
-import com.qcard.api.question.dto.QuestionRes;
-import com.qcard.api.question.dto.QuestionZipRes;
+import com.qcard.api.question.dto.*;
+import com.qcard.common.dto.QuestionFilterReq;
 import com.qcard.common.enums.Category;
+import com.qcard.common.enums.QuestionType;
+import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionDomainService questionDomainService;
 
-    public List<QuestionRes> findQuestionByCategory(Category category) {
-        List<Question> entities = questionDomainService.findQuestionByCategory(category);
-        return entities.stream().map(QuestionRes::new).collect(Collectors.toList());
-    }
-
-    public QuestionRes findQuestion(Long id) {
-        return new QuestionRes(questionDomainService.findQuestionByPk(id));
+    public Page<QuestionRes> findQuestionsByParam(Account account, QuestionFilterReq questionFilterReq, Pageable pageable) {
+        if(questionFilterReq.getMine() && account == null) {
+            throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+        }
+        Page<Question> entities = questionDomainService.findQuestionByParam(questionFilterReq, account, pageable);
+        return entities.map(entity -> new QuestionRes(entity, account));
     }
 
     public QuestionMainRes findQuestionOnMain() {
         QuestionZipRes questionZip = new QuestionZipRes(questionDomainService.findQuestionByCategory(Category.randomCategory()));
-        QuestionRes questionRes = new QuestionRes(questionDomainService.findQuestionByRand());
-        return new QuestionMainRes(questionZip, questionRes);
+        QuestionSimpleRes questionSimpleRes = new QuestionSimpleRes(questionDomainService.findQuestionByRand());
+        return new QuestionMainRes(questionZip, questionSimpleRes);
+    }
+
+    public QuestionSimpleRes createQuestion(Account account, QuestionReq questionReq) {
+        Question question = questionDomainService.createQuestion(
+                account,
+                questionReq.getTitle(),
+                questionReq.getCategory(),
+                QuestionType.TYPE_CUSTOM
+        );
+
+        return new QuestionSimpleRes(question);
     }
 }
