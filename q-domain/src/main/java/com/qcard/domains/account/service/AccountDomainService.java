@@ -35,7 +35,19 @@ public class AccountDomainService {
     }
 
     @Transactional(readOnly = true)
+    public Account findAccountById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다"));
+    }
+
+    @Transactional(readOnly = true)
     public Boolean existsAccountByEmail(String email) {
         return accountRepository.existsAccountByEmail(email);
+    }
+
+    @Transactional
+    public Account updateAccount(Account account, String name, String email, String profile) {
+        account.update(name, email, profile);
+        return findAccountById(account.getId());
     }
 }
