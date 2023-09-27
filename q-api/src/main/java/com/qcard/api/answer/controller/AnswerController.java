@@ -7,6 +7,8 @@ import com.qcard.common.enums.Category;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.domains.account.entity.Account;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,6 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerService answerService;
-    private final AccountService accountService;
 
     @PostMapping("")
     public ResponseEntity<AnswerCreateRes> answerCreate(@AuthAccount Account account, @RequestBody AnswerReq answerReq) {
