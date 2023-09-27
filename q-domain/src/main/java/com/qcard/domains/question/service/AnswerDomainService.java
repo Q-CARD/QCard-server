@@ -1,5 +1,6 @@
 package com.qcard.domains.question.service;
 
+import com.qcard.common.enums.Category;
 import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.repository.AnswerRepository;
@@ -39,8 +40,8 @@ public class AnswerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Answer> findAnswerByAccount(Account account, Pageable pageable) {
-        return answerRepository.findAllAccount(account, pageable);
+    public List<Answer> findAnswerByAccount(Account account, Category category) {
+        return answerRepository.findAllByAccountAndQuestion_Category(account, category);
     }
 
     @Transactional(readOnly = true)

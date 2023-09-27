@@ -33,7 +33,7 @@ public class QuestionRes {
             return null;
         }
         else {
-            return new AccountRes(accountEntity.getName(), accountEntity.getEmail());
+            return new AccountRes(accountEntity);
         }
     }
 

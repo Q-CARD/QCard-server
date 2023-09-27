@@ -27,6 +27,8 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final StringPath password = createString("password");
 
+    public final StringPath profile = createString("profile");
+
     public QAccount(String variable) {
         super(Account.class, forVariable(variable));
     }
