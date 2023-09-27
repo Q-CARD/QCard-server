@@ -3,6 +3,7 @@ package com.qcard.api.answer.controller;
 import com.qcard.api.account.service.AccountService;
 import com.qcard.api.answer.dto.*;
 import com.qcard.api.answer.service.AnswerService;
+import com.qcard.common.enums.Category;
 import com.qcard.resolver.AuthAccount;
 import com.qcard.domains.account.entity.Account;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class AnswerController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account) {
-        List<AnswerMeRes> response = answerService.getAnswersByAuth(account);
+    public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account, @RequestParam Category category) {
+        List<AnswerMeRes> response = answerService.getAnswersByAuth(account, category);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
