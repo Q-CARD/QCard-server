@@ -6,6 +6,8 @@ import com.qcard.domains.question.repository.AnswerRepository;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +39,8 @@ public class AnswerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public List<Answer> findAnswerByAccount(Account account) {
-        return answerRepository.findAllByAccount(account);
+    public Page<Answer> findAnswerByAccount(Account account, Pageable pageable) {
+        return answerRepository.findAllAccount(account, pageable);
     }
 
     @Transactional(readOnly = true)
