@@ -47,4 +47,10 @@ public class QuestionController {
         QuestionMainRes res = questionService.findQuestionOnMain();
         return ResponseEntity.ok(res);
     }
+
+    @GetMapping("/me")
+    private ResponseEntity<Page<QuestionSimpleRes>> questionsByAuth(@AuthAccount Account account, Pageable pageable) {
+        Page<QuestionSimpleRes> res = questionService.findQuestionsByAuth(account, pageable);
+        return ResponseEntity.ok(res);
+    }
 }

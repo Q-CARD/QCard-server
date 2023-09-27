@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 public class QuestionService {
     private final QuestionDomainService questionDomainService;
 
-    //TODO: QuestionRes로 변환작업 필요
     public Page<QuestionRes> findQuestionsByParam(Account account, QuestionFilterReq questionFilterReq, Pageable pageable) {
         Page<Question> entities = questionDomainService.findQuestionByParam(questionFilterReq, account, pageable);
         return entities.map(entity -> new QuestionRes(entity, account));
@@ -40,5 +39,10 @@ public class QuestionService {
         );
 
         return new QuestionSimpleRes(question);
+    }
+
+    public Page<QuestionSimpleRes> findQuestionsByAuth(Account account, Pageable pageable) {
+        Page<Question> entities = questionDomainService.findQuestionsByAuth(account, pageable);
+        return entities.map(QuestionSimpleRes::new);
     }
 }

@@ -63,4 +63,9 @@ public class QuestionDomainService {
                 .build()
         );
     }
+
+    public Page<Question> findQuestionsByAuth(Account account, Pageable pageable) {
+        if(account == null) throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+        else return questionRepository.findAllAccount(account, pageable);
+    }
 }

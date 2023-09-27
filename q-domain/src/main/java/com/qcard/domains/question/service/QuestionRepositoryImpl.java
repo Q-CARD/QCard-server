@@ -24,16 +24,24 @@ import static com.qcard.domains.question.entity.QQuestion.question;
 public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
-
     @Override
     public Page<Question> findAllTypeCategoryAccount(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
-        List<Question> content = getQuestions(questionFilterReq, account, pageable);
-        JPAQuery<Long> countQuery = getCount(questionFilterReq, account);
+        List<Question> content = getFilterQuestions(questionFilterReq, account, pageable);
+        JPAQuery<Long> count = getFilterQuestionsCount(questionFilterReq, account);
 
-        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
     }
 
-    private List<Question> getQuestions(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
+    @Override
+    public Page<Question> findAllAccount(Account account, Pageable pageable) {
+        List<Question> content = getMyQuestions(account, pageable);
+        JPAQuery<Long> count = getMyQuestionsCount(account);
+
+        return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
+    }
+
+
+    private List<Question> getFilterQuestions(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
         return jpaQueryFactory
                 .selectFrom(question)
                 .where(typeEq(questionFilterReq.getType()),
@@ -45,7 +53,16 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
                 .fetch();
     }
 
-    private JPAQuery<Long> getCount(QuestionFilterReq questionFilterReq, Account account) {
+    private List<Question> getMyQuestions(Account account, Pageable pageable) {
+        return jpaQueryFactory
+                .selectFrom(question)
+                .where(question.account.eq(account))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    private JPAQuery<Long> getFilterQuestionsCount(QuestionFilterReq questionFilterReq, Account account) {
         return jpaQueryFactory
                 .select(question.count())
                 .from(question)
@@ -53,6 +70,13 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
                         categoryEq(questionFilterReq.getCategory()),
                         accountEq(questionFilterReq.getMine(), account)
                 );
+    }
+
+    private JPAQuery<Long> getMyQuestionsCount(Account account) {
+        return jpaQueryFactory
+                .select(question.count())
+                .from(question)
+                .where(question.account.eq(account));
     }
 
     private BooleanExpression typeEq(final QuestionType type) {

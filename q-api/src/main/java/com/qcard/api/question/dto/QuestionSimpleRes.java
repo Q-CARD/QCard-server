@@ -12,7 +12,6 @@ public class QuestionSimpleRes {
     private Long questionId;
     private String title;
     private String category;
-
     private QuestionType type;
 
     public QuestionSimpleRes(Question entity) {
