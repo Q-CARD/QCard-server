@@ -32,15 +32,6 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
     }
 
-    @Override
-    public Page<Question> findAllAccount(Account account, Pageable pageable) {
-        List<Question> content = getMyQuestions(account, pageable);
-        JPAQuery<Long> count = getMyQuestionsCount(account);
-
-        return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
-    }
-
-
     private List<Question> getFilterQuestions(QuestionFilterReq questionFilterReq, Account account, Pageable pageable) {
         return jpaQueryFactory
                 .selectFrom(question)
@@ -48,15 +39,6 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
                         categoryEq(questionFilterReq.getCategory()),
                         accountEq(questionFilterReq.getMine(), account)
                 )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-    }
-
-    private List<Question> getMyQuestions(Account account, Pageable pageable) {
-        return jpaQueryFactory
-                .selectFrom(question)
-                .where(question.account.eq(account))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -70,13 +52,6 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom {
                         categoryEq(questionFilterReq.getCategory()),
                         accountEq(questionFilterReq.getMine(), account)
                 );
-    }
-
-    private JPAQuery<Long> getMyQuestionsCount(Account account) {
-        return jpaQueryFactory
-                .select(question.count())
-                .from(question)
-                .where(question.account.eq(account));
     }
 
     private BooleanExpression typeEq(final QuestionType type) {

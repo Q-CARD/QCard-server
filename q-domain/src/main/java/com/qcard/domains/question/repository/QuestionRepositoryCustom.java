@@ -10,6 +10,4 @@ import java.util.List;
 
 public interface QuestionRepositoryCustom {
     Page<Question> findAllTypeCategoryAccount(QuestionFilterReq questionFilterReq, Account account, Pageable pageable);
-
-    Page<Question> findAllAccount(Account account, Pageable pageable);
 }

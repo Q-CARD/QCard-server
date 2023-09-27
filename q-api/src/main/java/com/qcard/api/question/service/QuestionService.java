@@ -20,6 +20,9 @@ public class QuestionService {
     private final QuestionDomainService questionDomainService;
 
     public Page<QuestionRes> findQuestionsByParam(Account account, QuestionFilterReq questionFilterReq, Pageable pageable) {
+        if(questionFilterReq.getMine() && account == null) {
+            throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+        }
         Page<Question> entities = questionDomainService.findQuestionByParam(questionFilterReq, account, pageable);
         return entities.map(entity -> new QuestionRes(entity, account));
     }
@@ -39,10 +42,5 @@ public class QuestionService {
         );
 
         return new QuestionSimpleRes(question);
-    }
-
-    public Page<QuestionSimpleRes> findQuestionsByAuth(Account account, Pageable pageable) {
-        Page<Question> entities = questionDomainService.findQuestionsByAuth(account, pageable);
-        return entities.map(QuestionSimpleRes::new);
     }
 }
