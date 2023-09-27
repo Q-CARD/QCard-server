@@ -1,5 +1,6 @@
 package com.qcard.api.account.dto;
 
+import com.qcard.domains.account.entity.Account;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class AccountRes {
     private String name;
     private String email;
+    private String profile;
 
-    public AccountRes(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public AccountRes(Account account) {
+        this.name = account.getName();
+        this.email = account.getEmail();
+        this.profile = account.getProfile();
     }
 }

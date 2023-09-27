@@ -36,6 +36,6 @@ public class AnswerMeRes {
     }
 
     private AccountRes createdAccountRes(Account account) {
-        return new AccountRes(account.getName(), account.getEmail());
+        return new AccountRes(account);
     }
 }
