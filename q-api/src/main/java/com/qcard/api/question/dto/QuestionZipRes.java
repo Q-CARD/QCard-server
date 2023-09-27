@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionZipRes {
     private String category;
-    private List<QuestionRes> questions;
+    private List<QuestionSimpleRes> questions;
 
     public QuestionZipRes(List<Question> entities) {
         this.category = entities.get(0).getCategory().toString();
         this.questions = entities.subList(0, 5)
-                .stream().map(QuestionRes::new).collect(Collectors.toList());
+                .stream().map(QuestionSimpleRes::new).collect(Collectors.toList());
     }
 }

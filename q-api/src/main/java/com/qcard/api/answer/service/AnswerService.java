@@ -5,6 +5,7 @@ import com.qcard.api.answer.dto.AnswerMeRes;
 import com.qcard.api.answer.dto.AnswerReq;
 import com.qcard.api.answer.dto.AnswerUpdateReq;
 import com.qcard.api.question.dto.QuestionDetailRes;
+import com.qcard.common.enums.SortType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.heart.service.HeartDomainService;
 import com.qcard.domains.question.entity.Question;
@@ -12,6 +13,8 @@ import com.qcard.domains.question.service.AnswerDomainService;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,11 @@ public class AnswerService {
     private final QuestionDomainService questionDomainService;
 
     public AnswerCreateRes createAnswer(Account account, AnswerReq answerReq) {
+        Answer befAnswer = answerDomainService.findAnswerById(answerReq.getQuestionId());
+        if(befAnswer != null) {
+            throw new IllegalArgumentException("사용자의 답변이 이미 존재합니다.");
+        }
+        
         Answer answer = answerDomainService.createAnswer(
                 answerReq.getQuestionId(),
                 account,
@@ -37,7 +45,7 @@ public class AnswerService {
         return new AnswerCreateRes(answer.getContent());
     }
 
-    public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId) {
+    public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId, SortType sort) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
         if(entities.isEmpty()) {
             Question question = questionDomainService.findQuestionById(questionId);
@@ -48,15 +56,13 @@ public class AnswerService {
         List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)
                 .stream().map(heart -> heart.getAnswer().getId()).toList();
 
-        return new QuestionDetailRes(entities, account, heartedAnswerList, heartCounts);
+        return new QuestionDetailRes(entities, account, heartedAnswerList, heartCounts, sort);
     }
 
-    public List<AnswerMeRes> getAnswersByAuth(Account account) {
-        List<Answer> entities = answerDomainService.findAnswerByAccount(account);
-        if(entities.isEmpty()) return new ArrayList<>();
-
+    public Page<AnswerMeRes> getAnswersByAuth(Account account, Pageable pageable) {
+        Page<Answer> entities = answerDomainService.findAnswerByAccount(account, pageable);
         Map<Long, Integer> heartCounts = countHearts(entities);
-        return entities.stream().map(entity -> new AnswerMeRes(heartCounts.get(entity.getId()), entity)).collect(Collectors.toList());
+        return entities.map(entity -> new AnswerMeRes(heartCounts.get(entity.getId()), entity));
     }
 
     public AnswerMeRes updateAnswer(Account account, Long answerId, AnswerUpdateReq answerUpdateReq) throws AccessDeniedException {
@@ -69,6 +75,11 @@ public class AnswerService {
             Answer newAnswer = answerDomainService.updateAnswer(answer, answerUpdateReq.getContent());
             return new AnswerMeRes(heartDomainService.countHeartByAnswerId(answer.getId()), newAnswer);
         }
+    }
+
+    public Map<Long, Integer> countHearts(Page<Answer> entities) {
+        List<Long> answerIds = entities.stream().map(Answer::getId).toList();
+        return answerIds.stream().collect(Collectors.toMap(id -> id, heartDomainService::countHeartByAnswerId));
     }
 
     public Map<Long, Integer> countHearts(List<Answer> entities) {

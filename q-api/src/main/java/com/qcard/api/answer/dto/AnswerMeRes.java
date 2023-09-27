@@ -1,7 +1,7 @@
 package com.qcard.api.answer.dto;
 
 import com.qcard.api.account.dto.AccountRes;
-import com.qcard.common.enums.Type;
+import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
@@ -9,14 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Getter
 @NoArgsConstructor
 public class AnswerMeRes {
     private Question question;
     private Long answerId;
-    private Type type;
+    private AnswerType type;
     private AccountRes account;
     private String content;
 
