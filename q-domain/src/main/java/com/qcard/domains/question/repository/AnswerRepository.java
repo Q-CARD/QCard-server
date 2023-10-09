@@ -16,4 +16,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>, AnswerRep
     Optional<Answer> findAnswerById(Long answerId);
 
     List<Answer> findAllByAccountAndQuestion_Category(Account account, Category category);
+
+    Boolean existsByAccountAndQuestion_Id(Account account, Long questionId);
 }
