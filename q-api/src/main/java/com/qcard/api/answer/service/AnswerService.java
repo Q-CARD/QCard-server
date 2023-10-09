@@ -32,8 +32,7 @@ public class AnswerService {
     private final QuestionDomainService questionDomainService;
 
     public AnswerCreateRes createAnswer(Account account, AnswerReq answerReq) {
-        Answer befAnswer = answerDomainService.findAnswerById(answerReq.getQuestionId());
-        if(befAnswer != null) {
+        if(answerDomainService.existsAnswerByQuestionIdAndAccount(account, answerReq.getQuestionId())) {
             throw new IllegalArgumentException("사용자의 답변이 이미 존재합니다.");
         }
         
