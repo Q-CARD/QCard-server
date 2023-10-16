@@ -20,7 +20,8 @@ public enum Category {
     CATEGORY_BACK("Backend"),
     CATEGORY_FRONT("Frontend"),
     CATEGORY_AI("AI"),
-    CATEGORY_인성("인성 질문");
+    CATEGORY_인성("인성 질문"),
+    CATEGORY_ETC("기타");
 
 
     private final String label;

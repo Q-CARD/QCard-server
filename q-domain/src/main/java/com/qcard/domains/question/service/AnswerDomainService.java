@@ -1,12 +1,14 @@
 package com.qcard.domains.question.service;
 
-import com.qcard.common.enums.Type;
+import com.qcard.common.enums.Category;
+import com.qcard.common.enums.AnswerType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.repository.AnswerRepository;
 import com.qcard.domains.question.entity.Answer;
 import com.qcard.domains.question.entity.Question;
-import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +29,7 @@ public class AnswerDomainService {
                         .question(question)
                         .account(account)
                         .content(content)
-                        .type(Type.TYPE_ANSWER)
+                        .type(AnswerType.TYPE_ANSWER)
                         .build()
         );
     }
@@ -38,8 +40,8 @@ public class AnswerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public List<Answer> findAnswerByAccount(Account account) {
-        return answerRepository.findAllByAccount(account);
+    public List<Answer> findAnswerByAccount(Account account, Category category) {
+        return answerRepository.findAllByAccountAndQuestion_Category(account, category);
     }
 
     @Transactional(readOnly = true)
