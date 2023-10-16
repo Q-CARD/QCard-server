@@ -27,6 +27,9 @@ public class Account {
     @Column
     private String profile;
 
+    @Column
+    private Boolean isDeleted;
+
     @Builder
     public Account(String name, String email, String password) {
         this.name = name;
@@ -38,6 +41,10 @@ public class Account {
         this.name = name;
         this.email = email;
         this.password = profile;
+    }
+
+    public void updateIsDeleted() {
+        this.isDeleted = true;
     }
 
 }

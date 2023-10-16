@@ -50,4 +50,9 @@ public class AccountDomainService {
         account.update(name, email, profile);
         return findAccountById(account.getId());
     }
+
+    public Account updateAccountIsDeleted(Account account) {
+        account.updateIsDeleted();
+        return findAccountById(account.getId());
+    }
 }
