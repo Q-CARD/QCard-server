@@ -1,6 +1,6 @@
 # 🧑‍💻 QCARD - "슬로건"
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://https://github.com/Q-CARD/QCard-server&count_bg=%23FF7B72&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FQ-CARD%2FQCard-server&count_bg=%234282FF&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ## 🥳 백엔드 팀원 소개
 
