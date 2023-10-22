@@ -14,13 +14,16 @@
         <td width="30%" align="center"><img src = "https://github.com/sunnyineverywhere.png" width="80%"/></td>
     </tr>
     <tr width="100%">
-       <td width="30%" align="center">[채팅] Websocket과 Stomp를 이용한 1:1 및 n:n 채팅 기능, 채팅방 관련 CRUD 기능  
-          </br> [프로필/워크스페이스] 프로필 및 워크스페이스 리팩토링 및 오류해결 진행
-          </br> [기타] mongodb 설계, api문서 작성, 리드미 작성 등.</td>
-        <td width="30%" align="center">[로그인] Google API를 이용한 Oauth2 로그인/회원가입, JWT와 Redis를 이용한 인가작업 관리 등 
-          </br> [유저] 유저 관련 CRUD
-          </br> [배포] Travis ci 및 Github Action을 이용한 CICD 파이프라인 구축
-          </br> [기타] mongodb 설계, api 문서 작성 등 </td>
+        <td width="30%" align="center">
+            [유저] <br>
+            [답변] <br>
+            [좋아요] <br>
+        </td>
+        <td width="30%" align="center">
+            [질문] <br>
+            [면접] <br>
+            [공통] <br>
+        </td>
    </tr>
 </table>
 <br>
@@ -46,21 +49,8 @@
 ## 🗂️ 프로젝트 구조
 
 ### ERD
+<img width="765" alt="image" src="https://github.com/Q-CARD/QCard-server/assets/68330823/8e3f0396-332a-4681-a1cc-6dd73130750f">
 
-### 라이브러리
-1. spring boot web
-2. spring boot mongodb
-3. spring boot mail
-4. spring boot thymeleaf
-5. spring boot security
-6. spring boot data redis
-7. spring boot websocket
-8. spring boot test
-9. lombok
-10. sockjs-client
-11. stomp-websocket
-12. gson
-13. jjwt
 
 ### 폴더 
 <pre>
