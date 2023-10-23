@@ -37,7 +37,7 @@ public class Account {
     public void update(String name, String email, String profile) {
         this.name = name;
         this.email = email;
-        this.password = profile;
+        this.profile = profile;
     }
 
 }
