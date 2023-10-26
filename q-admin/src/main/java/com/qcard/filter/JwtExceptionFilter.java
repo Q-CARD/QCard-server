@@ -10,46 +10,45 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+@Order(0)
 public class JwtExceptionFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
             filterChain.doFilter(request, response);
-        } catch (ExpiredJwtException e){
-            throwException(response, "JWT EXPIRED", e);
-        } catch (JwtException | ServletException e){
-            throwException(response, "JWT INVALID", e);
+        } catch (JwtException e){
+            throwException(request, response, "JWT ERROR", e);
         }
     }
 
     private void throwException(
+            HttpServletRequest request,
             HttpServletResponse response,
             String message,
             Exception e
-    ) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        response.setStatus(ErrorStatus.INTERNAL_SERVER_ERROR.getStatusCode());
+    ) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        try {
-            response.getWriter().write(objectMapper.writeValueAsString(
-                    ErrorResponse
-                            .builder()
-                            .error(ErrorStatus.INTERNAL_SERVER_ERROR.getCode())
-                            .details(e.getMessage())
-                            .code(ErrorStatus.INTERNAL_SERVER_ERROR.getCode())
-                            .message(message)
-                            .build()
-            ));
-        } catch (JsonProcessingException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        final Map<String, Object> body = new HashMap<>();
+        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+        body.put("error", "JWT ERROR");
+        body.put("message", e.getMessage());
+        body.put("path", request.getServletPath());
+
+        mapper.writeValue(response.getOutputStream(), body);
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }
