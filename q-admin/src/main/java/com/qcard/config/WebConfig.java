@@ -27,7 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("http://localhost:3000", "http://localhost:3001", "https://q-card-dev.vercel.app/",
+                        "https://qcard.co.kr", "https://www.qcard.co.kr")
                 .allowedMethods("PUT", "DELETE", "OPTIONS", "GET", "POST", "PATCH")
                 .allowedHeaders("Authorization")
                 .allowCredentials(false).maxAge(3600);
