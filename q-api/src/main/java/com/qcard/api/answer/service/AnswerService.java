@@ -53,7 +53,7 @@ public class AnswerService {
 
         if(entities.isEmpty()) {
             Question question = questionDomainService.findQuestionById(questionId);
-            return new QuestionDetailRes(question);
+            return new QuestionDetailRes(question, account);
         }
 
         Map<Long, Integer> heartCounts = countHearts(entities);

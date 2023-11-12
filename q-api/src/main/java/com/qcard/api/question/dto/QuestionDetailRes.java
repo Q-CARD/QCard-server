@@ -20,15 +20,14 @@ import org.springframework.data.util.Pair;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionDetailRes {
-    private Question question;
+    private QuestionRes question;
     private AnswerRes myAnswer;
     private AnswerRes gpt;
     private List<AnswerRes> answers;
 
 
     public QuestionDetailRes(List<Answer> answers, Pair<Answer, Integer> myAnswer, List<Long> hearts, Map<Long, Integer> heartCnts, SortType sort) {
-        this.question = answers.get(0).getQuestion();
-
+        this.question = new QuestionRes(answers.get(0).getQuestion(), myAnswer.getFirst().getAccount());
         this.myAnswer = new AnswerRes(myAnswer.getFirst(), myAnswer.getSecond());
 
         if (answers.get(0).getType() == AnswerType.TYPE_GPT) {
@@ -50,8 +49,8 @@ public class QuestionDetailRes {
         }
     }
 
-    public QuestionDetailRes(Question question) {
-        this.question = question;
+    public QuestionDetailRes(Question question, Account account) {
+        this.question = new QuestionRes(question, account);
         this.answers = new ArrayList<>();
     }
 }
