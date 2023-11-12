@@ -26,9 +26,12 @@ public class QuestionDetailRes {
     private List<AnswerRes> answers;
 
 
-    public QuestionDetailRes(List<Answer> answers, Pair<Answer, Integer> myAnswer, List<Long> hearts, Map<Long, Integer> heartCnts, SortType sort) {
-        this.question = new QuestionRes(answers.get(0).getQuestion(), myAnswer.getFirst().getAccount());
-        this.myAnswer = new AnswerRes(myAnswer.getFirst(), myAnswer.getSecond());
+    public QuestionDetailRes(Account account, List<Answer> answers, Answer myAnswer, Integer myAnswerCount, List<Long> hearts, Map<Long, Integer> heartCnts, SortType sort) {
+        this.question = new QuestionRes(answers.get(0).getQuestion(), account);
+
+        if(myAnswer != null) {
+            this.myAnswer = new AnswerRes(myAnswer, myAnswerCount);
+        }
 
         if (answers.get(0).getType() == AnswerType.TYPE_GPT) {
             this.gpt = new AnswerRes(answers.get(0));

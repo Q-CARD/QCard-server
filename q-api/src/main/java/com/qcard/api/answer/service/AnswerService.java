@@ -49,7 +49,10 @@ public class AnswerService {
     public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId, SortType sort) {
         List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId, account);
         Answer answer = answerDomainService.findAnswerByAccountAndQuestionId(account, questionId);
-        Pair<Answer, Integer> myAnswer = Pair.of(answer, countMyAnswerHeart(answer));
+        Integer answerCount = 0;
+        if(answer != null) {
+            answerCount = countMyAnswerHeart(answer);
+        }
 
         if(entities.isEmpty()) {
             Question question = questionDomainService.findQuestionById(questionId);
@@ -64,7 +67,7 @@ public class AnswerService {
                     .stream().map(heart -> heart.getAnswer().getId()).toList();
         }
 
-        return new QuestionDetailRes(entities, myAnswer, heartedAnswerList, heartCounts, sort);
+        return new QuestionDetailRes(account, entities, answer, answerCount, heartedAnswerList, heartCounts, sort);
     }
 
     public List<AnswerMeRes> getAnswersByAuth(Account account, Category category) {

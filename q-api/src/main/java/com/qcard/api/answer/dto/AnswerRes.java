@@ -40,11 +40,9 @@ public class AnswerRes {
     }
 
     public AnswerRes(Answer answer) {
-        if(answer != null) {
-            this.answerId = answer.getId();
-            this.type = answer.getType();
-            this.content = answer.getContent();
-        }
+        this.answerId = answer.getId();
+        this.type = answer.getType();
+        this.content = answer.getContent();
     }
 
     public AnswerRes(Answer answer, Integer heartCount) {
