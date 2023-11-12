@@ -24,22 +24,15 @@ public class AnswerRes {
 
     private Boolean isHearted;
 
-    private Boolean isMine;
-
-    public AnswerRes(Answer answer, Account myAccount, List<Long> heartList, Integer heartCount) {
+    public AnswerRes(Answer answer, List<Long> heartList, Integer heartCount) {
         this.answerId = answer.getId();
         this.type = answer.getType();
-        this.account = createdAccountRes(answer.getAccount());
         this.content = answer.getContent();
+        this.account = createdAccountRes(answer.getAccount());
         this.heartCount = heartCount;
         this.createdAt = answer.getCreatedAt();
         this.modifiedAt = answer.getModifiedAt();
-        this.isMine = Boolean.FALSE;
         this.isHearted = Boolean.FALSE;
-
-        if (myAccount.getId().equals(answer.getAccount().getId())) {
-            this.isMine = Boolean.TRUE;
-        }
 
         if (heartList.contains(answer.getId())) {
             this.isHearted = Boolean.TRUE;
@@ -47,9 +40,21 @@ public class AnswerRes {
     }
 
     public AnswerRes(Answer answer) {
+        if(answer != null) {
+            this.answerId = answer.getId();
+            this.type = answer.getType();
+            this.content = answer.getContent();
+        }
+    }
+
+    public AnswerRes(Answer answer, Integer heartCount) {
         this.answerId = answer.getId();
         this.type = answer.getType();
         this.content = answer.getContent();
+        this.account = createdAccountRes(answer.getAccount());
+        this.heartCount = heartCount;
+        this.createdAt = answer.getCreatedAt();
+        this.modifiedAt = answer.getModifiedAt();
     }
 
     private AccountRes createdAccountRes(Account account) {

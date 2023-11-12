@@ -30,6 +30,17 @@ public class AnswerRepositoryImpl implements AnswerRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
     }
 
+    @Override
+    public List<Answer> findAllWithQuestionIdAndNotMyAccountOrderWithTypeDesc(Long questionId, Account account) {
+        return jpaQueryFactory
+                .selectFrom(answer)
+                .where(answer.question.id.eq(questionId)
+                        .and(answer.account.ne(account).or(answer.account.isNull())))
+                .orderBy(answer.type.desc())
+                .fetch();
+    }
+
+
     private List<Answer> getMyAnswers(Account account, Pageable pageable) {
         return jpaQueryFactory
                 .selectFrom(answer)

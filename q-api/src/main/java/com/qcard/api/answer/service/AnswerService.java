@@ -8,6 +8,7 @@ import com.qcard.api.question.dto.QuestionDetailRes;
 import com.qcard.common.enums.Category;
 import com.qcard.common.enums.SortType;
 import com.qcard.domains.account.entity.Account;
+import com.qcard.domains.heart.entity.Heart;
 import com.qcard.domains.heart.service.HeartDomainService;
 import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.service.AnswerDomainService;
@@ -16,6 +17,7 @@ import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -45,17 +47,24 @@ public class AnswerService {
     }
 
     public QuestionDetailRes findAnswerByQuestionId(Account account, Long questionId, SortType sort) {
-        List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId);
+        List<Answer> entities = answerDomainService.findAnswerByQuestionId(questionId, account);
+        Answer answer = answerDomainService.findAnswerByAccountAndQuestionId(account, questionId);
+        Pair<Answer, Integer> myAnswer = Pair.of(answer, countMyAnswerHeart(answer));
+
         if(entities.isEmpty()) {
             Question question = questionDomainService.findQuestionById(questionId);
-            return new QuestionDetailRes(question, account);
+            return new QuestionDetailRes(question);
         }
 
         Map<Long, Integer> heartCounts = countHearts(entities);
-        List<Long> heartedAnswerList = heartDomainService.findHeartByAccount(account)
-                .stream().map(heart -> heart.getAnswer().getId()).toList();
+        List<Heart> myHeartList = heartDomainService.findHeartByAccount(account);
+        List<Long> heartedAnswerList = new ArrayList<>();
+        if(!myHeartList.isEmpty()) {
+            heartedAnswerList = heartDomainService.findHeartByAccount(account)
+                    .stream().map(heart -> heart.getAnswer().getId()).toList();
+        }
 
-        return new QuestionDetailRes(entities, account, heartedAnswerList, heartCounts, sort);
+        return new QuestionDetailRes(entities, myAnswer, heartedAnswerList, heartCounts, sort);
     }
 
     public List<AnswerMeRes> getAnswersByAuth(Account account, Category category) {
@@ -77,9 +86,8 @@ public class AnswerService {
         }
     }
 
-    public Map<Long, Integer> countHearts(Page<Answer> entities) {
-        List<Long> answerIds = entities.stream().map(Answer::getId).toList();
-        return answerIds.stream().collect(Collectors.toMap(id -> id, heartDomainService::countHeartByAnswerId));
+    public Integer countMyAnswerHeart(Answer answer) {
+        return heartDomainService.countHeartByAnswerId(answer.getId());
     }
 
     public Map<Long, Integer> countHearts(List<Answer> entities) {

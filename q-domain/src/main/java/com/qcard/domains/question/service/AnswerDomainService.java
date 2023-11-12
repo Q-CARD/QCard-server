@@ -37,13 +37,22 @@ public class AnswerDomainService {
     }
 
     @Transactional(readOnly = true)
-    public List<Answer> findAnswerByQuestionId(Long questionId) {
-        return answerRepository.findAllByQuestionIdOrderByTypeDesc(questionId);
+    public List<Answer> findAnswerByQuestionId(Long questionId, Account account) {
+        return answerRepository.findAllWithQuestionIdAndNotMyAccountOrderWithTypeDesc(questionId, account);
+    }
+
+    public Answer findAnswerByAccountAndQuestionId(Account account, Long questionId) {
+        return answerRepository.findAnswerByAccountAndQuestionId(account, questionId);
     }
 
     @Transactional(readOnly = true)
     public List<Answer> findAnswerByAccount(Account account, Category category) {
-        return answerRepository.findAllByAccountAndQuestion_Category(account, category);
+        if(category == null) {
+            return answerRepository.findAllByAccount(account);
+        }
+        else{
+            return answerRepository.findAllByAccountAndQuestion_Category(account, category);
+        }
     }
 
     @Transactional(readOnly = true)
