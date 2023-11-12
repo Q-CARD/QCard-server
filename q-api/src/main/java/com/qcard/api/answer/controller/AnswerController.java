@@ -30,7 +30,7 @@ public class AnswerController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account, @RequestParam Category category) {
+    public ResponseEntity<List<AnswerMeRes>> answersByAuth(@AuthAccount Account account, @RequestParam(required = false) Category category) {
         List<AnswerMeRes> response = answerService.getAnswersByAuth(account, category);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
