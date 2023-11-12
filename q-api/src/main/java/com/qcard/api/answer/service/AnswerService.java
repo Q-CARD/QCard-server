@@ -5,6 +5,7 @@ import com.qcard.api.answer.dto.AnswerMeRes;
 import com.qcard.api.answer.dto.AnswerReq;
 import com.qcard.api.answer.dto.AnswerUpdateReq;
 import com.qcard.api.question.dto.QuestionDetailRes;
+import com.qcard.common.enums.Category;
 import com.qcard.common.enums.SortType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.heart.service.HeartDomainService;
@@ -15,7 +16,6 @@ import com.qcard.domains.question.service.QuestionDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -32,8 +32,7 @@ public class AnswerService {
     private final QuestionDomainService questionDomainService;
 
     public AnswerCreateRes createAnswer(Account account, AnswerReq answerReq) {
-        Answer befAnswer = answerDomainService.findAnswerById(answerReq.getQuestionId());
-        if(befAnswer != null) {
+        if(answerDomainService.existsAnswerByQuestionIdAndAccount(account, answerReq.getQuestionId())) {
             throw new IllegalArgumentException("사용자의 답변이 이미 존재합니다.");
         }
         
@@ -59,10 +58,11 @@ public class AnswerService {
         return new QuestionDetailRes(entities, account, heartedAnswerList, heartCounts, sort);
     }
 
-    public Page<AnswerMeRes> getAnswersByAuth(Account account, Pageable pageable) {
-        Page<Answer> entities = answerDomainService.findAnswerByAccount(account, pageable);
+    public List<AnswerMeRes> getAnswersByAuth(Account account, Category category) {
+        List<Answer> entities = answerDomainService.findAnswerByAccount(account, category);
+        if(entities.isEmpty()) return new ArrayList<>();
         Map<Long, Integer> heartCounts = countHearts(entities);
-        return entities.map(entity -> new AnswerMeRes(heartCounts.get(entity.getId()), entity));
+        return entities.stream().map(entity -> new AnswerMeRes(heartCounts.get(entity.getId()), entity)).collect(Collectors.toList());
     }
 
     public AnswerMeRes updateAnswer(Account account, Long answerId, AnswerUpdateReq answerUpdateReq) throws AccessDeniedException {

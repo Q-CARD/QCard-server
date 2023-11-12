@@ -47,9 +47,22 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<AccountRes> myAccountInfo(@AuthAccount Account account) {
-        AccountRes response = new AccountRes(account.getName(), account.getEmail());
+    @DeleteMapping("/")
+    public ResponseEntity<AccountDeleteRes> accountDelete(@AuthAccount Account account) {
+        AccountDeleteRes response = accountService.deleteAccount(account);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<AccountRes> myAccountInfo(@AuthAccount Account account) {
+        AccountRes response = new AccountRes(account);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<AccountRes> modifyAccountInfo(@AuthAccount Account account, @RequestBody AccountModifyReq request) {
+        AccountRes response = accountService.modifyAccount(account, request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

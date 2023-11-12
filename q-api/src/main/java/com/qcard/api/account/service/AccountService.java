@@ -67,4 +67,16 @@ public class AccountService {
             throw new IllegalArgumentException("잘못된 refresh token입니다.");
         }
     }
+
+    public AccountRes modifyAccount(Account account, AccountModifyReq request) {
+        return new AccountRes(accountDomainService.updateAccount(account, request.getName(), request.getEmail(), request.getProfile()));
+    }
+
+    public AccountDeleteRes deleteAccount(Account account) {
+        if(account.getIsDeleted()) throw new IllegalArgumentException("이미 탈퇴한 회원입니다.");
+        else {
+            accountDomainService.findAccountById(account.getId());
+            return new AccountDeleteRes(accountDomainService.updateAccountIsDeleted(account));
+        }
+    }
 }

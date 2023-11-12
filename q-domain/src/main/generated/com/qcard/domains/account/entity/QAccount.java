@@ -23,9 +23,13 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isDeleted = createBoolean("isDeleted");
+
     public final StringPath name = createString("name");
 
     public final StringPath password = createString("password");
+
+    public final StringPath profile = createString("profile");
 
     public QAccount(String variable) {
         super(Account.class, forVariable(variable));
