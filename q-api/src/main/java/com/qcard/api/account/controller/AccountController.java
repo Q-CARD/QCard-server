@@ -47,6 +47,12 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping("/")
+    public ResponseEntity<AccountDeleteRes> accountDelete(@AuthAccount Account account) {
+        AccountDeleteRes response = accountService.deleteAccount(account);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/profile")
     public ResponseEntity<AccountRes> myAccountInfo(@AuthAccount Account account) {
         AccountRes response = new AccountRes(account);

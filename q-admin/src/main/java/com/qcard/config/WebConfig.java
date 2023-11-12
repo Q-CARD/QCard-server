@@ -4,10 +4,12 @@ import com.qcard.resolver.AuthAccountArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -22,6 +24,16 @@ public class WebConfig implements WebMvcConfigurer {
         argumentResolvers.add(authAccountArgumentResolver);
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000", "http://localhost:3001", "https://q-card-dev.vercel.app/",
+                        "https://qcard.co.kr", "https://www.qcard.co.kr")
+                .allowedMethods("PUT", "DELETE", "OPTIONS", "GET", "POST", "PATCH")
+                .allowedHeaders("Authorization")
+                .allowCredentials(false).maxAge(3600);
+    }
+
     @Bean
     public CorsFilter corsFilter(){
         CorsConfiguration config = new CorsConfiguration();
@@ -32,10 +44,17 @@ public class WebConfig implements WebMvcConfigurer {
         config.addAllowedOrigin("https://qcard.co.kr");
         config.addAllowedOrigin("https://www.qcard.co.kr");
         config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedHeader("Authorization");
+        config.addAllowedMethod(HttpMethod.GET);
+        config.addAllowedMethod(HttpMethod.PUT);
+        config.addAllowedMethod(HttpMethod.DELETE);
+        config.addAllowedMethod(HttpMethod.POST);
+        config.addAllowedMethod(HttpMethod.HEAD);
+        config.addAllowedMethod(HttpMethod.PATCH);
+        config.addAllowedMethod(HttpMethod.OPTIONS);
         config.setMaxAge(3600L);
-        config.addExposedHeader("Authorization");
-        config.addExposedHeader("");
+        // config.addExposedHeader("Authorization");
+        // config.addExposedHeader("");
         config.addExposedHeader("Location");
         config.setMaxAge(3600L);
 
