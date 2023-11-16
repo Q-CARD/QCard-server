@@ -23,15 +23,15 @@ public class AccountService {
         if (!accountReq.isValid()) {
             throw new IllegalArgumentException("사용자에 대한 올바른 정보를 입력해주세요.");
         }
-        else if (accountDomainService.existsAccountByEmail(accountReq.getEmail())) {
-            throw new IllegalArgumentException("이미 계정이 존재합니다.");
+        else if(accountDomainService.findAccountByEmail(accountReq.getEmail()) != null){
+            throw new IllegalArgumentException((accountReq.getEmail() + ": 이미 존재하는 계정입니다."));
         }
 
-        Account account = accountDomainService.createAccount(
+        Account newAccount = accountDomainService.createAccount(
                 accountReq.getEmail(),
                 accountReq.getName(),
                 jwtService.encryptPassword(accountReq.getPassword()));
-        return new SignUpRes(account.getName());
+        return new SignUpRes(newAccount.getName());
     }
 
     public TokenRes signIn(SignInReq signInReq) {
