@@ -8,5 +8,5 @@ else
   echo "> 현재 실행중인 도커 컨테이너가 없습니다."
 fi
 
-sudo docker rm -f $(docker ps -aq)
-sudo docker rmi $(sudo docker images -q)
+sudo docker rm -f $(sudo docker ps -aq)
+sudo docker rmi -f $(sudo docker images -q)

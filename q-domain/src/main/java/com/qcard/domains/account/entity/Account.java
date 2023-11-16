@@ -35,12 +35,13 @@ public class Account {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.isDeleted = false;
     }
 
     public void update(String name, String email, String profile) {
         this.name = name;
         this.email = email;
-        this.password = profile;
+        this.profile = profile;
     }
 
     public void updateIsDeleted() {

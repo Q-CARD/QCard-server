@@ -13,7 +13,11 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>, AnswerRep
 
     List<Answer> findAllByAccount(Account account);
 
+    Answer findAnswerByAccountAndQuestionId(Account account, Long question_id);
+
     Optional<Answer> findAnswerById(Long answerId);
 
     List<Answer> findAllByAccountAndQuestion_Category(Account account, Category category);
+
+    Boolean existsByAccountAndQuestion_Id(Account account, Long questionId);
 }
