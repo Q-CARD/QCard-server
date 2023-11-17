@@ -30,9 +30,15 @@ public class AccountDomainService {
 
     @Transactional(readOnly = true)
     public Account findAccountByEmail(String email) {
-        return accountRepository.findByEmail(email)
+        Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException(email + ": 존재하지 않는 계정입니다"));
+        if(account.getIsDeleted()) {
+            throw new IllegalArgumentException(email + ": 탈퇴한 계정 이메일입니다.");
+        }
+
+        return account;
     }
+
 
     @Transactional(readOnly = true)
     public Account findAccountById(Long id) {
