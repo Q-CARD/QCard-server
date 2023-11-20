@@ -22,10 +22,6 @@ permissions:
     group: ubuntu
 
 hooks:
-  AfterInstall:
-    - location: scripts/stop.sh
-      timeout: 180
-      runas: ubuntu
   ApplicationStart:
     - location: scripts/deploy.sh
       timeout: 180
