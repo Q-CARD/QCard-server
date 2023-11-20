@@ -23,7 +23,7 @@ public class AccountService {
         if (!accountReq.isValid()) {
             throw new IllegalArgumentException("사용자에 대한 올바른 정보를 입력해주세요.");
         }
-        else if(accountDomainService.findAccountByEmail(accountReq.getEmail()) != null){
+        else if(accountDomainService.existsAccountByEmail(accountReq.getEmail())){
             throw new IllegalArgumentException((accountReq.getEmail() + ": 이미 존재하는 계정입니다."));
         }
 
