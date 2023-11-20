@@ -1,5 +1,16 @@
-REPOSITORY=/home/ubuntu/qcard
+REPOSITORY=/home/ubuntu/app
 cd $REPOSITORY
 
-echo "> 배포"
-sudo docker-compose up -d
+CURRENT_CONTAINER=$(sudo docker ps -aq --filter "name=qcard")
+
+if [ -z $CURRENT_CONTAINER ]
+then
+  echo "> 현재 실행중인 도커 컨테이너가 없습니다."
+else
+  echo "> kill  $CURRENT_CONTAINER"
+  sudo docker rm -f $CURRENT_CONTAINER
+  sudo docker rmi $CURRENT_CONTAINER
+fi
+
+sudo docker build -t qcard .
+sudo docker run -d -p 80:8080 --name qcard --network app qcard
