@@ -13,4 +13,4 @@ else
 fi
 
 sudo docker build -t qcard .
-sudo docker run -d -p 80:8080 --name qcard --network app qcard
+sudo docker run -d -p 80:8080 --name qcard --network my qcard
