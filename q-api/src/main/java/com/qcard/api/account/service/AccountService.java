@@ -20,6 +20,8 @@ public class AccountService {
     private final RedisService redisService;
 
     public SignUpRes signUp(AccountReq accountReq) {
+        log.info("[SIGNUP-SERVICE] Request: " + accountReq);
+
         if (!accountReq.isValid()) {
             throw new IllegalArgumentException("사용자에 대한 올바른 정보를 입력해주세요.");
         }
@@ -31,6 +33,7 @@ public class AccountService {
                 accountReq.getEmail(),
                 accountReq.getName(),
                 jwtService.encryptPassword(accountReq.getPassword()));
+
         return new SignUpRes(newAccount.getName());
     }
 

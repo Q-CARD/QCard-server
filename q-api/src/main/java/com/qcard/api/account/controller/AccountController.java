@@ -25,6 +25,8 @@ public class AccountController {
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpRes> signUp(@Valid @RequestBody AccountReq accountReq) {
+        log.info("[SIGNUP-CONTROLLER] Request: " + accountReq);
+
         SignUpRes response = accountService.signUp(accountReq);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

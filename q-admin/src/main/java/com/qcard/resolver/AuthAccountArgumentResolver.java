@@ -30,6 +30,7 @@ public class AuthAccountArgumentResolver implements HandlerMethodArgumentResolve
         assert authAccountAnnotation != null;
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("[SIGNUP-AUTH] Authentication: " + authentication.getPrincipal());
 
         if (authentication.getPrincipal() == "anonymousUser") {
             return null;
