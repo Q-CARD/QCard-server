@@ -9,7 +9,7 @@ then
 else
   echo "> kill  $CURRENT_CONTAINER"
   sudo docker rm -f $CURRENT_CONTAINER
-  sudo docker rmi $CURRENT_CONTAINER
+  sudo docker rmi qcard
 fi
 
 sudo docker build -t qcard .
