@@ -7,4 +7,5 @@ jar {
 
 dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation ':q-card:coomon'
 }
