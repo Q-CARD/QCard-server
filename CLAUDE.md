@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-QCard-server is a Spring Boot application providing an interview question management system with user authentication, question/answer management, and heart (like) functionality. **Note: This project was migrated from a multi-module to single-module architecture for simplicity.**
+QCard-server is a Spring Boot application providing an interview question management system with user authentication, question/answer management, and heart (like) functionality. **Note: This project was successfully migrated from a multi-module to a single root-level project for simplicity.**
 
 ## Build System & Commands
 
@@ -18,40 +18,47 @@ QCard-server is a Spring Boot application providing an interview question manage
 - **Local development**: Use `scripts/run-local.sh` which handles build and Docker Compose setup
 - **Stop local**: `scripts/stop-local.sh`
 
-## Single Module Architecture
+## Single Root Project Architecture
 
-The project uses a layered architecture within the single `q-api` module:
+The project uses a layered architecture in a single root project:
 
-### Package Structure
+### Project Structure
 ```
-com.qcard/
-├── api/                     # REST controllers and application services
-│   ├── account/            # Account management
-│   ├── question/           # Question management  
-│   ├── answer/             # Answer management
-│   └── heart/              # Heart/like functionality
-├── domain/                 # Domain entities, repositories, and services
-│   ├── account/
-│   ├── question/
-│   ├── answer/
-│   ├── heart/
-│   └── interview/
-├── security/               # Authentication and authorization
-│   ├── config/            # Security configurations
-│   ├── jwt/               # JWT handling
-│   ├── filter/            # Security filters
-│   ├── redis/             # Redis session management
-│   ├── resolver/          # Argument resolvers
-│   └── service/           # Security services
-├── infrastructure/        # Infrastructure concerns
-│   ├── kafka/             # Message queue integration
-│   └── QueryDslConfig.java
-└── common/                # Shared utilities
-    ├── entity/            # BaseTimeEntity
-    ├── enums/             # Category, QuestionType, etc.
-    ├── exception/         # Error handling
-    ├── config/            # Swagger configuration
-    └── dto/               # Shared DTOs
+QCard-server/
+├── src/main/java/com/qcard/
+│   ├── QCardApplication.java    # Main application entry point
+│   ├── api/                     # REST controllers and application services
+│   │   ├── account/            # Account management
+│   │   ├── question/           # Question management  
+│   │   ├── answer/             # Answer management
+│   │   └── heart/              # Heart/like functionality
+│   ├── domain/                 # Domain entities, repositories, and services
+│   │   ├── account/
+│   │   ├── question/
+│   │   ├── answer/
+│   │   ├── heart/
+│   │   └── interview/
+│   ├── security/               # Authentication and authorization
+│   │   ├── config/            # Security configurations
+│   │   ├── jwt/               # JWT handling
+│   │   ├── filter/            # Security filters
+│   │   ├── redis/             # Redis session management
+│   │   ├── resolver/          # Argument resolvers
+│   │   └── service/           # Security services
+│   ├── infrastructure/        # Infrastructure concerns
+│   │   ├── kafka/             # Message queue integration
+│   │   └── QueryDslConfig.java
+│   └── common/                # Shared utilities
+│       ├── entity/            # BaseTimeEntity
+│       ├── enums/             # Category, QuestionType, etc.
+│       ├── exception/         # Error handling
+│       ├── config/            # Swagger configuration
+│       └── dto/               # Shared DTOs
+├── src/main/generated/         # QueryDSL Q-classes
+├── src/main/resources/
+│   └── application.yml        # Application configuration
+├── build.gradle              # Single unified build configuration
+└── settings.gradle           # Simple project settings
 ```
 
 ## Key Technologies
