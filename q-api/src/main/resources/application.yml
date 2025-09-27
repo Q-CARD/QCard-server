@@ -3,6 +3,7 @@ spring:
     active:
       - prods
       - admin
+      - kafka
     group:
       devs:
         - dev

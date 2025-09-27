@@ -1,0 +1,19 @@
+name: "👀 Refactor"
+description: "코드 리팩토링"
+title: "[Refactor] "
+labels: ["refactor"]
+body:
+  - type: textarea
+    attributes:
+      label: 🎯 개선하려는 부분
+      description: 어떤 코드나 기능을 리팩토링할 것인지 설명해 주세요.
+      placeholder: 예) 로그인 로직, 컴포넌트 구조 등
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: ✨ 기대 효과
+      description: 리팩토링을 통해 얻을 수 있는 이점을 작성해 주세요.
+      placeholder: 예) 코드 가독성 향상, 성능 개선, 유지보수 용이성 증대 등
+    validations:
+      required: true

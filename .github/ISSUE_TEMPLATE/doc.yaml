@@ -1,0 +1,19 @@
+name: "📑 Documentation"
+description: "문서 추가 또는 수정"
+title: "[Docs] "
+labels: ["documentation"]
+body:
+  - type: textarea
+    attributes:
+      label: 📄 설명
+      description: 추가하거나 수정할 문서에 대해 설명해 주세요.
+      placeholder: 예) README.md 파일 업데이트, API 문서 추가 등
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: ✅ 작업할 내용
+      description: 할 일을 체크박스 형태로 작성해주세요.
+      placeholder: |
+        - [ ] OOO 문서 초안 작성
+        - [ ] OOO 내용 추가

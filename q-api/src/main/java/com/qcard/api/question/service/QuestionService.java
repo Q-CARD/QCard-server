@@ -7,6 +7,8 @@ import com.qcard.common.enums.QuestionType;
 import com.qcard.domains.account.entity.Account;
 import com.qcard.domains.question.entity.Question;
 import com.qcard.domains.question.service.QuestionDomainService;
+import com.qcard.dto.PersonalQuestionDto;
+import com.qcard.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionDomainService questionDomainService;
+    private final KafkaProducerService<PersonalQuestionDto> kafkaProducerService;
 
     public Page<QuestionRes> findQuestionsByParam(Account account, QuestionFilterReq questionFilterReq, Pageable pageable) {
         if(questionFilterReq.getMine() && account == null) {
@@ -39,6 +42,11 @@ public class QuestionService {
                 questionReq.getTitle(),
                 questionReq.getCategory(),
                 QuestionType.TYPE_CUSTOM
+        );
+
+        kafkaProducerService.sendMessage(
+                "personal-question",
+                    PersonalQuestionDto.builder().questionId(question.getId()).category(question.getCategory()).title(question.getTitle()).build()
         );
 
         return new QuestionSimpleRes(question);
