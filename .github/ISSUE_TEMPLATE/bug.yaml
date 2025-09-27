@@ -1,0 +1,26 @@
+name: "🐛 Bug Report"
+description: "버그 리포트 작성"
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: 📄 설명
+      description: 발생한 버그에 대해 설명해 주세요.
+      placeholder: 자세히 적을수록 좋습니다!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 🐾 재현 방법
+      description: 버그를 재현할 수 있는 순서를 작성해 주세요.
+      placeholder: |
+        1. OOO 페이지로 이동한다.
+        2. OOO 버튼을 클릭한다.
+        3. OOO 에러가 발생한다.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 📸 스크린샷
+      description: 가능하다면 스크린샷을 첨부해 주세요.
