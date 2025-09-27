@@ -1,9 +1,9 @@
 package com.qcard.api.heart.service;
 
 import com.qcard.api.heart.dto.HeartRes;
-import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.heart.entity.Heart;
-import com.qcard.domains.heart.service.HeartDomainService;
+import com.qcard.domain.account.entity.Account;
+import com.qcard.domain.heart.entity.Heart;
+import com.qcard.domain.heart.service.HeartDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

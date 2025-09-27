@@ -2,8 +2,8 @@ package com.qcard.api.answer.dto;
 
 import com.qcard.api.account.dto.AccountRes;
 import com.qcard.common.enums.AnswerType;
-import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.question.entity.Answer;
+import com.qcard.domain.account.entity.Account;
+import com.qcard.domain.question.entity.Answer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

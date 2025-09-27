@@ -1,11 +1,11 @@
 package com.qcard.api.account.service;
 
 import com.qcard.api.account.dto.*;
-import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.account.service.AccountDomainService;
-import com.qcard.jwt.JwtService;
-import com.qcard.jwt.TokenRes;
-import com.qcard.redis.RedisService;
+import com.qcard.domain.account.entity.Account;
+import com.qcard.domain.account.service.AccountDomainService;
+import com.qcard.security.jwt.JwtService;
+import com.qcard.security.jwt.TokenRes;
+import com.qcard.security.redis.RedisService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

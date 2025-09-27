@@ -1,6 +1,6 @@
 package com.qcard.api.account.dto;
 
-import com.qcard.domains.account.entity.Account;
+import com.qcard.domain.account.entity.Account;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

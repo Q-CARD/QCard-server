@@ -3,8 +3,8 @@ package com.qcard.api.question.dto;
 import com.qcard.api.account.dto.AccountRes;
 import com.qcard.common.enums.Category;
 import com.qcard.common.enums.QuestionType;
-import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.question.entity.Question;
+import com.qcard.domain.account.entity.Account;
+import com.qcard.domain.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,7 @@
 package com.qcard.api.question.dto;
 
 import com.qcard.common.enums.QuestionType;
-import com.qcard.domains.question.entity.Question;
+import com.qcard.domain.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,11 +1,11 @@
 package com.qcard.api.account.controller;
 
 import com.qcard.api.account.dto.*;
-import com.qcard.domains.account.entity.Account;
-import com.qcard.domains.account.service.AccountDomainService;
+import com.qcard.domain.account.entity.Account;
+import com.qcard.domain.account.service.AccountDomainService;
 import com.qcard.api.account.service.AccountService;
-import com.qcard.resolver.AuthAccount;
-import com.qcard.jwt.TokenRes;
+import com.qcard.security.resolver.AuthAccount;
+import com.qcard.security.jwt.TokenRes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

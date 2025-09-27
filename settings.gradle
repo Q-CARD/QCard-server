@@ -1,7 +1,2 @@
 rootProject.name = 'QCard-server'
 include 'q-api'
-include 'q-common'
-include 'q-admin'
-include 'q-domain'
-include 'q-infra'
-include ':q-infra:kafka'

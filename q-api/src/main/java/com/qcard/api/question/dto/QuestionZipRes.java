@@ -1,6 +1,6 @@
 package com.qcard.api.question.dto;
 
-import com.qcard.domains.question.entity.Question;
+import com.qcard.domain.question.entity.Question;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
